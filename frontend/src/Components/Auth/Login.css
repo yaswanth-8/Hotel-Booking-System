@@ -1,0 +1,50 @@
+.container {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  width: 300px;
+  height: fit-content;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.left {
+  background-color: chartreuse;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.right {
+  background-color: chartreuse;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+.login-input {
+  margin-bottom: 20px;
+  flex-grow: 1;
+  height: 25px;
+  border-radius: 10px;
+}
+
+.input-wrapper {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.login-input + svg {
+  margin-left: 10px;
+  width: 20%;
+  min-width: 20px;
+  cursor: pointer;
+  max-width: 20px;
+}
