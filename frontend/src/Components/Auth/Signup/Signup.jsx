@@ -1,14 +1,12 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowsRotate,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Login.css";
 
 const user = { password: "yaswanth8*" };
-
-function Login() {
+function SignUp() {
   const [formData, setFormData] = useState({
     userName: "",
     displayEmail: false,
@@ -23,7 +21,6 @@ function Login() {
   const sendHandler = () => {
     const inputValue = sendRef.current.value;
     const updatedFormData = { ...formData };
-
     if (!updatedFormData.userName) {
       console.log(inputValue);
       updatedFormData.userName = inputValue;
@@ -37,8 +34,7 @@ function Login() {
       }, 1000);
     } else if (!updatedFormData.email) {
       console.log(inputValue);
-      updatedFormData.email = inputValue;
-      setFormData(updatedFormData);
+      setFormData((prev) => ({ ...prev, email: inputValue }));
       setTimeout(() => {
         setFormData((prev) => ({
           ...prev,
@@ -68,14 +64,12 @@ function Login() {
       password: "",
       displayPassword: false,
       passwordFieldPosition: "right",
+      inputType: "text",
     });
   };
 
   return (
-    <div className="container">
-      <center>
-        <h2>Login</h2>
-      </center>
+    <div>
       <div className="left">Enter your name</div>
       {formData.userName && <div className="right">{formData.userName}</div>}
 
@@ -119,4 +113,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;

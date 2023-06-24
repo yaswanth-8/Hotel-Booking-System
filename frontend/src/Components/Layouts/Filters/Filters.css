@@ -1,0 +1,11 @@
+.filters-container {
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+  border-radius: 20px;
+  height: fit-content;
+  width: 10%;
+  padding: 50px;
+  background-color: rgb(132, 197, 197);
+  margin-left: 25px;
+}

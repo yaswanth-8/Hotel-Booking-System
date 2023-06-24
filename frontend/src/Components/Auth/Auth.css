@@ -1,8 +1,8 @@
-.container {
-  position: absolute;
+.login-container {
+  position: fixed;
   top: 50%;
-  left: 80%;
-  transform: translate(-50%, -50%);
+  right: 25px;
+  transform: translateY(-50%);
   border-radius: 20px;
   background-color: #f0f0f0;
   width: 300px;
@@ -33,6 +33,9 @@
   flex-grow: 1;
   height: 25px;
   border-radius: 10px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  padding-left: 10px;
 }
 
 .input-wrapper {
@@ -47,4 +50,20 @@
   min-width: 20px;
   cursor: pointer;
   max-width: 20px;
+}
+
+.switch-mode {
+  margin: 20px;
+}
+
+.active {
+  background-color: rgb(47, 255, 54);
+  border: 1px solid rgb(146, 145, 145);
+  transform: scale(1.5);
+}
+
+button {
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
 }

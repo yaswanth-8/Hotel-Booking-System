@@ -1,10 +1,12 @@
 import React from "react";
-import Login from "./Components/Auth/Login";
+import Filters from "./Components/Layouts/Filters/Filters";
+import Auth from "./Components/Auth/Auth";
 
 function App() {
   return (
-    <div>
-      <Login />
+    <div className="app">
+      <Filters />
+      <Auth />
     </div>
   );
 }
