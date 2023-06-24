@@ -20,6 +20,9 @@ function SignUp() {
 
   const sendHandler = () => {
     const inputValue = sendRef.current.value;
+    if (inputValue === "") {
+      return;
+    }
     const updatedFormData = { ...formData };
     if (!updatedFormData.userName) {
       console.log(inputValue);
@@ -94,6 +97,11 @@ function SignUp() {
           className="login-input"
           type={formData.inputType}
           ref={sendRef}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              sendHandler();
+            }
+          }}
         />
         {formData.passwordFieldPosition === "right" ? (
           <FontAwesomeIcon

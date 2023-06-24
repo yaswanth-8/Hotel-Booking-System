@@ -12,7 +12,7 @@ function Filters() {
   };
 
   return (
-    <div className="filters-container">
+    <div className="filters-area">
       <Filter
         filterList={priceRange}
         heading="Price Range"

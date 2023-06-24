@@ -1,12 +1,8 @@
 .login-container {
-  position: fixed;
-  top: 50%;
-  right: 25px;
-  transform: translateY(-50%);
   border-radius: 20px;
   background-color: #f0f0f0;
-  width: 300px;
   height: fit-content;
+  width: 300px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -59,7 +55,7 @@
 .active {
   background-color: rgb(47, 255, 54);
   border: 1px solid rgb(146, 145, 145);
-  transform: scale(1.5);
+  transform: scale(1.2);
 }
 
 button {

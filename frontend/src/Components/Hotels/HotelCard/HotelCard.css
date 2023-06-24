@@ -1,0 +1,39 @@
+.hotel-card {
+  width: 250px;
+  height: 300px;
+}
+
+.hotel-image {
+  width: 250px;
+  height: 200px;
+  border-radius: 15px;
+}
+
+.hotel-details {
+  box-sizing: border-box;
+  padding: 0 5px;
+  height: 120px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hotel-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hotel-title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.star-rating {
+  font-size: 14px;
+}
+
+.hotel-description {
+  margin: 0;
+  color: rgb(106, 105, 105);
+}

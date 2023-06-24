@@ -18,6 +18,9 @@ function Login() {
 
   const sendHandler = () => {
     const inputValue = sendRef.current.value;
+    if (inputValue === "") {
+      return;
+    }
     const updatedFormData = { ...formData };
     if (!updatedFormData.email) {
       console.log(inputValue);
@@ -76,6 +79,11 @@ function Login() {
           className="login-input"
           type={formData.inputType}
           ref={sendRef}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              sendHandler();
+            }
+          }}
         />
         {formData.passwordFieldPosition === "right" ? (
           <FontAwesomeIcon
