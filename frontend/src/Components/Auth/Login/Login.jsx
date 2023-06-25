@@ -4,8 +4,11 @@ import {
   faArrowsRotate,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../store/Auth-Slice/authSlice";
 
-const user = { password: "yaswanth8*" };
+const user = { password: "yaswanthmd" };
+
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -14,7 +17,9 @@ function Login() {
     passwordFieldPosition: "right",
     inputType: "text",
   });
+
   const sendRef = useRef();
+  const dispatch = useDispatch();
 
   const sendHandler = () => {
     const inputValue = sendRef.current.value;
@@ -39,6 +44,7 @@ function Login() {
         updatedFormData.passwordFieldPosition = "left";
       } else {
         updatedFormData.password = inputValue;
+        dispatch(signIn(formData.email));
       }
       setFormData(updatedFormData);
     }

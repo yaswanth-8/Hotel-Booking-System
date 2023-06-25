@@ -1,6 +1,7 @@
 .app {
   display: flex;
   padding: 20px;
+
   justify-content: center;
 }
 
@@ -8,6 +9,7 @@
   width: auto;
 }
 .filters-container {
+  box-sizing: border-box;
   width: 25%;
 }
 .auth-container {
