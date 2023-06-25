@@ -1,10 +1,6 @@
 .filters-area {
-  /* position: absolute;
-  top: 50%;
-  transform: translate(0%, -50%); */
   border-radius: 20px;
   height: fit-content;
   padding: 15px;
-  background-color: rgb(132, 197, 197);
-  /* margin-left: 25px; */
+  background-color: aquamarine;
 }

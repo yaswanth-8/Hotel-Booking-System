@@ -1,17 +1,29 @@
 .app {
-  display: flex;
-  padding: 20px;
-
+  display: grid;
   justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-left: 10px;
 }
 
 .hotels-container {
-  width: auto;
+  margin-left: 10px;
+  width: 100%;
 }
+
 .filters-container {
-  box-sizing: border-box;
-  width: 25%;
+  margin-left: 20px;
+  width: 100%;
 }
+
 .auth-container {
-  width: 25%;
+  width: 100%;
+}
+
+.hide-auth {
+  grid-template-columns: 15% 1fr;
+}
+
+.show-auth {
+  grid-template-columns: 15% 1fr 25%;
 }
