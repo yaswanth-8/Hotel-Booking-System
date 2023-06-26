@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .hotelDetails-name {
@@ -18,8 +17,11 @@
 
 .big-image img {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  margin-top: 2px;
   height: auto;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
 .small-images {
@@ -36,10 +38,31 @@
   margin: 0.5%; /* Add some margin between images */
 }
 
+.small-images :nth-child(2) {
+  border-top-right-radius: 20px;
+}
+.small-images :nth-child(4) {
+  border-bottom-right-radius: 20px;
+}
+
 .hotelDetails {
   margin-bottom: 1rem;
+  height: fit-content;
+  padding: 5px;
+  width: 800px;
+  text-align: justify;
 }
 
 .hotelDetails p {
   margin: 0;
+}
+
+.hotel-details-booking {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hotel-details-data {
+  width: 80%;
+  margin-right: 20px;
 }
