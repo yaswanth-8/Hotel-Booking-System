@@ -10,8 +10,8 @@ function HotelDetails() {
   }
 
   return (
-    <div className="hotel-details">
-      <h2 className="hotel-name">{hotel.Name}</h2>
+    <div className="hotelDetails-details">
+      <h2 className="hotelDetails-name">{hotel.Name}</h2>
       <div className="image-grid">
         <div className="big-image">
           <img src={hotel.Url} alt={hotel.Name} />
@@ -22,7 +22,7 @@ function HotelDetails() {
           ))}
         </div>
       </div>
-      <div className="details">
+      <div className="hotelDetails">
         <p>
           <strong>Address:</strong> {hotel.Address}
         </p>

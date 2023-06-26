@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import HotelCard from "./HotelCard/HotelCard";
 import "./Hotels.css";
 
@@ -88,14 +89,26 @@ const HotelDetails = [
   },
 ];
 
-function Hotels() {
+const Hotels = () => {
+  const navigate = useNavigate();
+
+  const handleHotelClick = () => {
+    navigate("/hotel");
+  };
+
   return (
     <div className="hotels-section">
       {HotelDetails.map((hotel) => (
-        <HotelCard className="hotel-card" key={hotel.HotelID} Hotel={hotel} />
+        <div
+          className="hotel-card"
+          key={hotel.HotelID}
+          onClick={handleHotelClick}
+        >
+          <HotelCard Hotel={hotel} />
+        </div>
       ))}
     </div>
   );
-}
+};
 
 export default Hotels;
