@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Booking.css";
 
-const Booking = () => {
+const Booking = ({ price, offer }) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [numAdults, setNumAdults] = useState(1);
   const [numChildren, setNumChildren] = useState(0);
-  const [price, setPrice] = useState(1000);
+  const [totalPrice, setTotalPrice] = useState(price);
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [checkInDate, checkOutDate, numAdults, numChildren]);
+
+  const calculateTotalPrice = () => {
+    if (checkInDate && checkOutDate) {
+      const numberOfDays = Math.ceil(
+        (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+      );
+      console.log("days " + numberOfDays);
+      const basePrice = price * numberOfDays;
+      console.log("baseprice " + basePrice);
+      const discountedPrice = basePrice - (basePrice * offer) / 100;
+      console.log("discountedprice " + discountedPrice);
+      setTotalPrice(discountedPrice);
+    }
+  };
 
   const handleBook = () => {
     // Handle booking logic here
@@ -67,7 +86,8 @@ const Booking = () => {
         />
       </div>
       <div className="form-group">
-        <label className="form-label">Price:</label> {price}
+        <label className="form-label">Price:</label>{" "}
+        {isNaN(totalPrice) ? "0" : totalPrice} {/* Add a fallback value */}
       </div>
       <button className="book-button" onClick={handleBook}>
         Book

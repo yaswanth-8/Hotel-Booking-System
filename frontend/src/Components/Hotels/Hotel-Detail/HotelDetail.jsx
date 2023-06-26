@@ -54,7 +54,7 @@ function HotelDetails() {
             </p>
           </div>
         </div>
-        <Booking />
+        <Booking price={hotel.PricePerNight} offer={hotel.Offer} />
       </div>
     </div>
   );
