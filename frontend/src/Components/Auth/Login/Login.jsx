@@ -42,17 +42,20 @@ function Login() {
     } else if (!updatedFormData.password) {
       console.log(inputValue);
       if (user.password !== inputValue && inputValue !== "admin") {
+        console.log("invalid");
         updatedFormData.password = "Invalid credentials ";
         updatedFormData.passwordFieldPosition = "left";
       } else {
+        console.log("valid");
         updatedFormData.password = inputValue;
         if (inputValue === "admin") {
           dispatch(admin());
         } else {
           dispatch(signIn(formData.email));
         }
+
+        navigate("/hotels");
       }
-      navigate("/hotels");
       setFormData(updatedFormData);
     }
 
