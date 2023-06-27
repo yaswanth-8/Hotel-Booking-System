@@ -2,10 +2,22 @@ import React from "react";
 import "./Navbar.css";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../../../store/Auth-Slice/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ title, onAuthenticateClick }) {
   const auth = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const authenticateHandler = () => {
+    if (window.location.pathname !== "/") {
+      onAuthenticateClick("open");
+      navigate("/");
+    } else {
+      onAuthenticateClick();
+      navigate("/");
+    }
+  };
 
   const signOutHandler = () => {
     dispatch(signOut());
@@ -14,7 +26,7 @@ function Navbar({ title, onAuthenticateClick }) {
     <div className="navbar">
       <div className="navbar-title">{title}</div>
       {auth === "no-user" ? (
-        <button className="authenticate-button" onClick={onAuthenticateClick}>
+        <button className="authenticate-button" onClick={authenticateHandler}>
           Authenticate
         </button>
       ) : (

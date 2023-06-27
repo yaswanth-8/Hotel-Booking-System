@@ -1,10 +1,9 @@
 .hotels-section {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
+  justify-content: space-evenly;
 }
 
 .hotel-card {
-  margin: 0 20px 20px;
+  margin: 10px;
 }

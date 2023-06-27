@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const user = { password: "yaswanthmd" };
 
@@ -18,6 +19,7 @@ function Login() {
     inputType: "text",
   });
 
+  const navigate = useNavigate();
   const sendRef = useRef();
   const dispatch = useDispatch();
 
@@ -50,6 +52,7 @@ function Login() {
           dispatch(signIn(formData.email));
         }
       }
+      navigate("/hotels");
       setFormData(updatedFormData);
     }
 

@@ -1,0 +1,15 @@
+.filter-button {
+  position: absolute;
+  top: 12%;
+  left: 0.3%;
+  cursor: pointer;
+}
+
+.Homescreen-container {
+  display: flex;
+}
+
+.homescreen-filters-container {
+  margin: 20px 0 20px 30px;
+  width: 300px;
+}

@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Layouts/Navbar/Navbar";
-import Homescreen from "./Components/HomeScreen/Homescreen";
+import Welcomepage from "./Components/HomeScreen/Welcomepage";
 import "./App.css";
 import HotelDetails from "./Components/Hotels/Hotel-Detail/HotelDetail";
+import Homescreen from "./Components/HomeScreen/Homescreen";
 
 function App() {
   const [isAuthVisible, setIsAuthVisible] = useState(false);
 
-  const handleAuthenticateClick = () => {
-    setIsAuthVisible(!isAuthVisible);
+  const handleAuthenticateClick = (state) => {
+    if (state === "open") {
+      setIsAuthVisible(true);
+    } else {
+      setIsAuthVisible(!isAuthVisible);
+    }
   };
 
   return (
@@ -22,9 +27,10 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Homescreen isAuthVisible={isAuthVisible} />}
+            element={<Welcomepage isAuthVisible={isAuthVisible} />}
           />
-          <Route path="/hotel" element={<HotelDetails />} />
+          <Route path="/hotels/:id" element={<HotelDetails />} />
+          <Route path="/hotels" element={<Homescreen />} />
         </Routes>
       </div>
     </Router>

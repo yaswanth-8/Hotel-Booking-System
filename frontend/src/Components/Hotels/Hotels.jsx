@@ -105,12 +105,11 @@ const HotelDetails = [
     Site: "Mountain",
   },
 ];
-
 const Hotels = () => {
   const navigate = useNavigate();
 
-  const handleHotelClick = () => {
-    navigate("/hotel");
+  const handleHotelClick = (hotelId) => {
+    navigate(`/hotels/${hotelId}`);
   };
 
   return (
@@ -119,7 +118,7 @@ const Hotels = () => {
         <div
           className="hotel-card"
           key={hotel.HotelID}
-          onClick={handleHotelClick}
+          onClick={() => handleHotelClick(hotel.HotelID)}
         >
           <HotelCard Hotel={hotel} />
         </div>
