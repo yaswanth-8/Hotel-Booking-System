@@ -2,9 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./HotelDetail.css";
 import Booking from "../../Layouts/Booking/Booking";
+import EditHotelDetails from "./Edit-Hotel-Detail/EditHotelDetails";
 
 function HotelDetails() {
   const hotel = useSelector((state) => state.hotel);
+  const auth = useSelector((state) => state.auth.user);
 
   if (!hotel) {
     return <div>Loading...</div>; // Render a loading state while the hotel data is being fetched
@@ -54,7 +56,12 @@ function HotelDetails() {
             </p>
           </div>
         </div>
-        <Booking price={hotel.PricePerNight} offer={hotel.Offer} />
+
+        {auth === "admin" ? (
+          <EditHotelDetails hotel={hotel} />
+        ) : (
+          <Booking price={hotel.PricePerNight} offer={hotel.Offer} />
+        )}
       </div>
     </div>
   );

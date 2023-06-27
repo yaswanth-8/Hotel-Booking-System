@@ -12,9 +12,12 @@ export const authSlice = createSlice({
     signOut: (state) => {
       state.user = "no-user";
     },
+    admin: (state) => {
+      state.user = "admin";
+    },
   },
 });
 
-export const { signIn, signOut } = authSlice.actions;
+export const { signIn, signOut, admin } = authSlice.actions;
 
 export default authSlice.reducer;

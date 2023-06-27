@@ -5,7 +5,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { signIn } from "../../../store/Auth-Slice/authSlice";
+import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
 
 const user = { password: "yaswanthmd" };
 
@@ -39,12 +39,16 @@ function Login() {
       }, 1000);
     } else if (!updatedFormData.password) {
       console.log(inputValue);
-      if (user.password !== inputValue) {
+      if (user.password !== inputValue && inputValue !== "admin") {
         updatedFormData.password = "Invalid credentials ";
         updatedFormData.passwordFieldPosition = "left";
       } else {
         updatedFormData.password = inputValue;
-        dispatch(signIn(formData.email));
+        if (inputValue === "admin") {
+          dispatch(admin());
+        } else {
+          dispatch(signIn(formData.email));
+        }
       }
       setFormData(updatedFormData);
     }
