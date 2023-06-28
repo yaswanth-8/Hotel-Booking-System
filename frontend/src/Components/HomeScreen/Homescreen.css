@@ -13,3 +13,10 @@
   margin: 20px 0 20px 30px;
   width: 300px;
 }
+
+@media only screen and (max-width: 767px) {
+  .homescreen-filters-container {
+    position: absolute;
+    width: 300px;
+  }
+}

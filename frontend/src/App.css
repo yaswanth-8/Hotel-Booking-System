@@ -1,28 +1,39 @@
-.app {
-  display: grid;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-  margin-left: 10px;
-}
-
 .hotels-container {
   width: 100%;
 }
 
-.filters-container {
-  margin-left: 20px;
-  width: 100%;
-}
-
 .auth-container {
-  width: 100%;
+  width: 20%;
+  margin: 20px;
 }
 
-.hide-auth {
-  grid-template-columns: 15% 1fr;
+.welcomepage-container {
+  display: flex;
 }
 
-.show-auth {
-  grid-template-columns: 15% 1fr 25%;
+@media only screen and (max-width: 767px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .auth-container {
+    width: 100%;
+    display: block;
+    margin: 20px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-container {
+    width: 100%;
+    display: block;
+    margin: 20px;
+  }
+
+  .hotels-container {
+    display: none;
+  }
 }

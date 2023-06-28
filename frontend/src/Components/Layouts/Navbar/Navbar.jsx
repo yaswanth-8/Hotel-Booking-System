@@ -32,6 +32,7 @@ function Navbar({ title, onAuthenticateClick }) {
       <button className="authenticate-button" onClick={addHotelRouteHandler}>
         Add Hotel
       </button>
+
       {auth === "no-user" ? (
         <button className="authenticate-button" onClick={authenticateHandler}>
           Authenticate

@@ -3,14 +3,20 @@ import { useSelector } from "react-redux";
 import "./HotelDetail.css";
 import Booking from "../../Layouts/Booking/Booking";
 import EditHotelDetails from "./Edit-Hotel-Detail/EditHotelDetails";
+import { useNavigate } from "react-router-dom";
 
 function HotelDetails() {
   const hotel = useSelector((state) => state.hotel);
   const auth = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
 
   if (!hotel) {
     return <div>Loading...</div>; // Render a loading state while the hotel data is being fetched
   }
+
+  const showReviewsHandler = () => {
+    navigate(`/hotels/${hotel.HotelID}/reviews`);
+  };
 
   return (
     <div className="hotelDetails-details">
@@ -55,6 +61,7 @@ function HotelDetails() {
               <strong>Site:</strong> {hotel.Site}
             </p>
           </div>
+          <button onClick={showReviewsHandler}>Reviews</button>
         </div>
 
         {auth === "admin" ? (

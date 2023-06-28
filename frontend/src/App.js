@@ -6,6 +6,7 @@ import "./App.css";
 import HotelDetails from "./Components/Hotels/Hotel-Detail/HotelDetail";
 import Homescreen from "./Components/HomeScreen/Homescreen";
 import AddHotel from "./Components/Hotels/Add-Hotel/AddHotel";
+import Reviews from "./Components/Layouts/Reviews/Reviews";
 
 function App() {
   const [isAuthVisible, setIsAuthVisible] = useState(false);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/hotels/:id" element={<HotelDetails />} />
           <Route path="/hotels" element={<Homescreen />} />
           <Route path="/hotels/add" element={<AddHotel />} />
+          <Route path="/hotels/:id/reviews" element={<Reviews />} />
         </Routes>
       </div>
     </Router>
