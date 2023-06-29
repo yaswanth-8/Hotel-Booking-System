@@ -4,11 +4,13 @@ import "./HotelDetail.css";
 import Booking from "../../Layouts/Booking/Booking";
 import EditHotelDetails from "./Edit-Hotel-Detail/EditHotelDetails";
 import { useNavigate } from "react-router-dom";
+import useGetWeather from "../../../Hooks/useGetWeather";
 
 function HotelDetails() {
   const hotel = useSelector((state) => state.hotel);
   const auth = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+  const weather = useGetWeather(hotel.Location);
 
   if (!hotel) {
     return <div>Loading...</div>; // Render a loading state while the hotel data is being fetched
@@ -47,6 +49,9 @@ function HotelDetails() {
             </p>
             <p>
               <strong>Country:</strong> {hotel.Country}
+            </p>
+            <p>
+              <strong>Current Weather:</strong> {weather}
             </p>
             <p>
               <strong>Rating:</strong> {hotel.Rating}
