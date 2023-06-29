@@ -17,6 +17,9 @@ function HotelDetails() {
   const showReviewsHandler = () => {
     navigate(`/hotels/${hotel.HotelID}/reviews`);
   };
+  const raiseQueryHandler = () => {
+    navigate(`/hotels/${hotel.HotelID}/raisequery`);
+  };
 
   return (
     <div className="hotelDetails-details">
@@ -62,6 +65,7 @@ function HotelDetails() {
             </p>
           </div>
           <button onClick={showReviewsHandler}>Reviews</button>
+          <button onClick={raiseQueryHandler}>Raise-Query</button>
         </div>
 
         {auth === "admin" ? (

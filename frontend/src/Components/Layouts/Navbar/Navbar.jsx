@@ -22,6 +22,9 @@ function Navbar({ title, onAuthenticateClick }) {
   const addHotelRouteHandler = () => {
     navigate("/hotels/add");
   };
+  const showNotificationHandler = () => {
+    navigate("/notifications");
+  };
 
   const signOutHandler = () => {
     dispatch(signOut());
@@ -31,6 +34,9 @@ function Navbar({ title, onAuthenticateClick }) {
       <div className="navbar-title">{title}</div>
       <button className="authenticate-button" onClick={addHotelRouteHandler}>
         Add Hotel
+      </button>
+      <button className="authenticate-button" onClick={showNotificationHandler}>
+        🔔
       </button>
 
       {auth === "no-user" ? (
