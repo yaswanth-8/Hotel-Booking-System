@@ -51,7 +51,7 @@ function HotelDetails() {
               <strong>Country:</strong> {hotel.Country}
             </p>
             <p>
-              <strong>Current Weather:</strong> {weather}
+              <strong>Current Weather:</strong> {weather} °C
             </p>
             <p>
               <strong>Rating:</strong> {hotel.Rating}

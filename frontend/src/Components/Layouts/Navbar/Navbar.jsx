@@ -3,6 +3,8 @@ import "./Navbar.css";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../../../store/Auth-Slice/authSlice";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 function Navbar({ title, onAuthenticateClick }) {
   const auth = useSelector((state) => state.auth.user);
@@ -25,6 +27,9 @@ function Navbar({ title, onAuthenticateClick }) {
   const showNotificationHandler = () => {
     navigate("/notifications");
   };
+  const showProfileHandler = () => {
+    navigate("/profile");
+  };
 
   const signOutHandler = () => {
     dispatch(signOut());
@@ -37,6 +42,9 @@ function Navbar({ title, onAuthenticateClick }) {
       </button>
       <button className="authenticate-button" onClick={showNotificationHandler}>
         🔔
+      </button>
+      <button className="authenticate-button" onClick={showProfileHandler}>
+        <FontAwesomeIcon icon={faUser} />
       </button>
 
       {auth === "no-user" ? (

@@ -9,6 +9,7 @@ import AddHotel from "./Components/Hotels/Add-Hotel/AddHotel";
 import Reviews from "./Components/Layouts/Reviews/Reviews";
 import RaiseQuery from "./Components/Layouts/Query/RaiseQuery";
 import Notifications from "./Components/Layouts/Notifications/Notifications";
+import Profile from "./Components/Layouts/Profile/Profile";
 
 function App() {
   const [isAuthVisible, setIsAuthVisible] = useState(false);
@@ -39,6 +40,7 @@ function App() {
           <Route path="/hotels/:id/reviews" element={<Reviews />} />
           <Route path="/hotels/:id/raisequery" element={<RaiseQuery />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>

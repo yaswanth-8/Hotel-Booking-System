@@ -5,14 +5,15 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
-const user = { password: "yaswanth8*" };
 function SignUp() {
   const [formData, setFormData] = useState({
     userName: "",
     displayEmail: false,
     email: "",
     password: "",
+    retypePassword: "",
     displayPassword: false,
+    displayRetypePassword: false,
     passwordFieldPosition: "right",
     inputType: "text",
   });
@@ -47,11 +48,21 @@ function SignUp() {
       }, 1000);
     } else if (!updatedFormData.password) {
       console.log(inputValue);
-      if (user.password !== inputValue) {
-        updatedFormData.password = "Invalid credentials ";
+      setFormData((prev) => ({ ...prev, password: inputValue }));
+      setTimeout(() => {
+        setFormData((prev) => ({
+          ...prev,
+          displayRetypePassword: true,
+          inputType: "password",
+        }));
+      }, 1000);
+    } else if (!updatedFormData.retypePassword) {
+      console.log(inputValue);
+      if (updatedFormData.password !== inputValue) {
+        updatedFormData.retypePassword = "Password didnt match";
         updatedFormData.passwordFieldPosition = "left";
       } else {
-        updatedFormData.password = inputValue;
+        updatedFormData.retypePassword = inputValue;
       }
       setFormData(updatedFormData);
     }
@@ -65,7 +76,9 @@ function SignUp() {
       displayEmail: false,
       email: "",
       password: "",
+      retypePassword: "",
       displayPassword: false,
+      displayRetypePassword: false,
       passwordFieldPosition: "right",
       inputType: "text",
     });
@@ -86,9 +99,15 @@ function SignUp() {
         <div className="left">Enter your Password</div>
       )}
 
-      {formData.password && (
+      {formData.password && <div className="right">{formData.password}</div>}
+
+      {formData.displayRetypePassword && (
+        <div className="left">Retype your Password</div>
+      )}
+
+      {formData.retypePassword && (
         <div className={formData.passwordFieldPosition}>
-          {formData.password}
+          {formData.retypePassword}
         </div>
       )}
 

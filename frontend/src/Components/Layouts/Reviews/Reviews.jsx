@@ -8,8 +8,7 @@ const Reviews = () => {
       reviewer: "John Doe",
       date: "June 1, 2023",
       content: "Great hotel with excellent service!",
-      likes: 10,
-      dislikes: 2,
+      likes: 0,
     },
     // Add more dummy reviews here
   ]);
@@ -34,7 +33,6 @@ const Reviews = () => {
         }),
         content: newReview,
         likes: 0,
-        dislikes: 0,
       };
 
       setReviews([...reviews, newReviewObj]);
@@ -45,25 +43,16 @@ const Reviews = () => {
   };
 
   const handleLike = (id) => {
-    const updatedReviews = reviews.map((review) => {
-      if (review.id === id) {
-        return { ...review, likes: review.likes + 1 };
-      }
-      return review;
-    });
-
-    setReviews(updatedReviews);
-  };
-
-  const handleDislike = (id) => {
-    const updatedReviews = reviews.map((review) => {
-      if (review.id === id) {
-        return { ...review, dislikes: review.dislikes + 1 };
-      }
-      return review;
-    });
-
-    setReviews(updatedReviews);
+    setReviews((prevReviews) =>
+      prevReviews.map((review) =>
+        review.id === id
+          ? {
+              ...review,
+              likes: review.likes === 1 ? 0 : 1,
+            }
+          : review
+      )
+    );
   };
 
   return (
@@ -81,16 +70,10 @@ const Reviews = () => {
             <div className="content">{review.content}</div>
             <div className="review-actions">
               <button
-                className="like-button"
+                className={`like-button ${review.likes === 1 ? "liked" : ""}`}
                 onClick={() => handleLike(review.id)}
               >
                 Like ({review.likes})
-              </button>
-              <button
-                className="dislike-button"
-                onClick={() => handleDislike(review.id)}
-              >
-                Dislike ({review.dislikes})
               </button>
             </div>
             <hr className="review-divider" />

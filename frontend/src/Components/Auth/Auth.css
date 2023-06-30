@@ -9,7 +9,8 @@
 }
 
 .left {
-  background-color: chartreuse;
+  background-color: #00415a;
+  color: #f0f0f0;
   width: fit-content;
   padding: 10px;
   border-radius: 10px;
@@ -17,7 +18,8 @@
 }
 
 .right {
-  background-color: chartreuse;
+  background-color: #00415a;
+  color: #f0f0f0;
   width: fit-content;
   padding: 10px;
   border-radius: 10px;
@@ -53,13 +55,16 @@
 }
 
 .active {
-  background-color: rgb(47, 255, 54);
+  background-color: #00415a;
   border: 1px solid rgb(146, 145, 145);
+  color: #f0f0f0;
+  font-size: small;
   transform: scale(1.2);
 }
 
-button {
+.auth-button {
+  height: 20px;
+  margin: 8px;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px;
 }

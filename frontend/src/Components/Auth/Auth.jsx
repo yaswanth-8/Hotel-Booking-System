@@ -12,7 +12,7 @@ function Auth() {
       <center>
         <div className="switch-mode">
           <button
-            className={authState === "login" ? "active" : ""}
+            className={`auth-button ${authState === "login" ? "active" : ""}`}
             onClick={() => {
               setAuthState("login");
             }}
@@ -20,7 +20,7 @@ function Auth() {
             Login
           </button>
           <button
-            className={authState === "signUp" ? "active" : ""}
+            className={`auth-button ${authState === "signUp" ? "active" : ""}`}
             onClick={() => {
               setAuthState("signUp");
             }}
