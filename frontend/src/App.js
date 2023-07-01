@@ -26,6 +26,7 @@ function App() {
     <Router>
       <div>
         <Navbar
+          className="Navbar-display-container"
           title="Presidio Bookings"
           onAuthenticateClick={handleAuthenticateClick}
         />

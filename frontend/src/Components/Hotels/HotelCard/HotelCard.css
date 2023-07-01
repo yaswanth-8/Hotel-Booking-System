@@ -1,6 +1,7 @@
 .hotel-card {
-  width: 250px;
+  width: 260px;
   height: 300px;
+  margin-top: 10px;
 }
 
 .hotel-image {

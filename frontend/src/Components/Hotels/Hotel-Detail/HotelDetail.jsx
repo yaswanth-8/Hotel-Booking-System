@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useGetWeather from "../../../Hooks/useGetWeather";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Static from "../../Layouts/Static/Static";
 
 function HotelDetails() {
   const hotel = useSelector((state) => state.hotel);
@@ -38,9 +39,11 @@ function HotelDetails() {
             <img src={hotel.Url} alt={hotel.Name} />
           </Carousel>
         </div>
-
+        <hr />
         <div className="hotelDetails">
-          <p>{hotel.About}</p>
+          <hr />
+          <p className="hotel-details-about">{hotel.About}</p>
+          <hr />
           <p>
             <strong>Address:</strong> {hotel.Address}
           </p>
@@ -68,13 +71,18 @@ function HotelDetails() {
           <p>
             <strong>Site:</strong> {hotel.Site}
           </p>
+          <hr />
+          <Static />
         </div>
-        <button className="blue-button" onClick={showReviewsHandler}>
-          Reviews
-        </button>
-        <button className="blue-button" onClick={raiseQueryHandler}>
-          Raise-Query
-        </button>
+        <div className="details-page-button">
+          <button className="blue-button" onClick={showReviewsHandler}>
+            Reviews
+          </button>
+          <button className="blue-button" onClick={raiseQueryHandler}>
+            Raise-Query
+          </button>
+        </div>
+        <hr />
       </div>
 
       <div className="hotel-details-booking">

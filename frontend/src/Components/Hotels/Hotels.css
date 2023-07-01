@@ -2,8 +2,5 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-}
-
-.hotel-card {
-  margin: 10px;
+  margin-left: 10px;
 }

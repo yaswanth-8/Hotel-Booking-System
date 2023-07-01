@@ -7,6 +7,7 @@
 
 .Homescreen-container {
   display: flex;
+  padding-top: 40px;
 }
 
 .homescreen-filters-container {

@@ -1,8 +1,7 @@
 .add-hotel-container {
   display: flex;
   justify-content: center;
-  padding: 20px;
-  margin-top: 5%;
+  padding-top: 60px;
 }
 
 .add-hotel-form {
@@ -24,7 +23,7 @@
 .add-image-button {
   margin-top: 10px;
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: #00415a;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -62,7 +61,7 @@
 .modal-ok-button {
   margin-top: 10px;
   padding: 8px 12px;
-  background-color: #007bff;
+  background-color: #00415a;
   color: #fff;
   border: none;
   border-radius: 4px;
