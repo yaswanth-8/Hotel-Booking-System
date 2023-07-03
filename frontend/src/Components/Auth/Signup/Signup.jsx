@@ -65,7 +65,7 @@ function SignUp() {
         updatedFormData.passwordFieldPosition = "left";
       } else {
         updatedFormData.retypePassword = inputValue;
-        postUser(formData.userName, formData.email, formData.password, "admin");
+        postUser(formData.userName, formData.email, formData.password, "user");
         console.log(isLoading);
         if (error) {
           console.log(error);

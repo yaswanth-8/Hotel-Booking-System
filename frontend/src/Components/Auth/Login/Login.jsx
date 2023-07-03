@@ -4,11 +4,10 @@ import {
   faArrowsRotate,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
-import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
 import { useNavigate } from "react-router-dom";
-
-const user = { password: "yaswanthmd" };
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { admin, signIn, singIn } from "../../../store/Auth-Slice/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -23,7 +22,7 @@ function Login() {
   const sendRef = useRef();
   const dispatch = useDispatch();
 
-  const sendHandler = () => {
+  const sendHandler = async () => {
     const inputValue = sendRef.current.value;
     if (inputValue === "") {
       return;
@@ -41,20 +40,23 @@ function Login() {
       }, 1000);
     } else if (!updatedFormData.password) {
       console.log(inputValue);
-      if (user.password !== inputValue && inputValue !== "admin") {
+      console.log("valid");
+      updatedFormData.password = inputValue;
+      try {
+        const response = await axios.get(
+          `http://localhost:5225/api/userInfo?email=${formData.email}&password=${inputValue}`
+        );
+        console.log(response.data);
+        if (response.data.role === "admin") {
+          dispatch(admin());
+        } else {
+          dispatch(signIn(response.data.name));
+        }
+        navigate("/hotels");
+      } catch (error) {
         console.log("invalid");
         updatedFormData.password = "Invalid credentials ";
         updatedFormData.passwordFieldPosition = "left";
-      } else {
-        console.log("valid");
-        updatedFormData.password = inputValue;
-        if (inputValue === "admin") {
-          dispatch(admin());
-        } else {
-          dispatch(signIn(formData.email));
-        }
-
-        navigate("/hotels");
       }
       setFormData(updatedFormData);
     }
