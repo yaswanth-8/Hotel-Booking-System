@@ -32,6 +32,28 @@ namespace backend.Controllers
             return await _context.User.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("/api/userInfo")]
+        public async Task<ActionResult<User>> GetUserLoginInfo(string email, string password)
+        {
+            Console.WriteLine("Inside userInfo function");
+            Console.WriteLine(email);
+            Console.WriteLine(password);
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
