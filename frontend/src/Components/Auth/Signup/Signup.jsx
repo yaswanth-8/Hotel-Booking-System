@@ -4,6 +4,7 @@ import {
   faArrowsRotate,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import usePostUser from "../../../Hooks/usePostUser";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ function SignUp() {
     inputType: "text",
   });
   const sendRef = useRef();
+  const { postUser, isLoading, error } = usePostUser();
 
   const sendHandler = () => {
     const inputValue = sendRef.current.value;
@@ -63,6 +65,11 @@ function SignUp() {
         updatedFormData.passwordFieldPosition = "left";
       } else {
         updatedFormData.retypePassword = inputValue;
+        postUser(formData.userName, formData.email, formData.password, "admin");
+        console.log(isLoading);
+        if (error) {
+          console.log(error);
+        }
       }
       setFormData(updatedFormData);
     }
