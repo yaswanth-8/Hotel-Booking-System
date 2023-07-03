@@ -30,5 +30,7 @@ namespace backend.Data
         }
 
         public DbSet<backend.Models.User> User { get; set; } = default!;
+
+        public DbSet<backend.Models.Hotel>? Hotel { get; set; }
     }
 }

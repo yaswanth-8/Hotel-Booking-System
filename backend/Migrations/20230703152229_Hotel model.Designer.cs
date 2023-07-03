@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(backendContext))]
-    partial class backendContextModelSnapshot : ModelSnapshot
+    [Migration("20230703152229_Hotel model")]
+    partial class Hotelmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,21 +71,6 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Site")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url5")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HotelID");
