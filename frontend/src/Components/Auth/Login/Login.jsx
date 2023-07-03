@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { admin, signIn, singIn } from "../../../store/Auth-Slice/authSlice";
+import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
 
 function Login() {
   const [formData, setFormData] = useState({
