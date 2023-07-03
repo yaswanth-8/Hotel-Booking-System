@@ -16,8 +16,8 @@ const Hotels = () => {
       {hotels.map((hotel) => (
         <div
           className="hotel-card"
-          key={hotel.HotelID}
-          onClick={() => handleHotelClick(hotel.HotelID)}
+          key={hotel.hotelID}
+          onClick={() => handleHotelClick(hotel.hotelID)}
         >
           <HotelCard Hotel={hotel} />
         </div>

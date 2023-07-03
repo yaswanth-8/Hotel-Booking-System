@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import "./AddHotel.css";
+import axios from "axios";
 
 const AddHotel = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hotelDetails, setHotelDetails] = useState({
-    HotelID: 1,
-    Name: "",
-    Address: "",
-    Location: "",
-    Country: "",
-    Urls: [],
-    FoodStyleID: "",
-    Rating: 0,
-    Description: "",
-    About: "",
-    PricePerNight: 0,
-    Offer: 0,
-    Site: "",
+    name: "",
+    address: "",
+    location: "",
+    country: "",
+    foodStyle: "",
+    rating: 0,
+    description: "",
+    about: "",
+    pricePerNight: 0,
+    offer: 0,
+    site: "",
   });
 
   const handleInputChange = (event) => {
@@ -34,15 +33,19 @@ const AddHotel = () => {
 
   const handleImageUrlSubmit = () => {
     setIsOpen(false);
-    setHotelDetails((prevDetails) => ({
-      ...prevDetails,
-      Urls: [...prevDetails.Urls],
-    }));
   };
 
   const handleSubmit = () => {
-    console.log(hotelDetails);
-    // Perform further actions with the hotel data, such as sending it to an API or storing it in state
+    axios
+      .post("http://localhost:5225/api/Hotels", hotelDetails)
+      .then((response) => {
+        console.log("Hotel created:", response.data);
+        // Perform any further actions or handle the response data as needed
+      })
+      .catch((error) => {
+        console.error("Error creating hotel:", error);
+        // Handle any errors that occurred during the request
+      });
   };
 
   return (
@@ -54,8 +57,8 @@ const AddHotel = () => {
               Hotel Name:
               <input
                 type="text"
-                name="Name"
-                value={hotelDetails.Name}
+                name="name"
+                value={hotelDetails.name}
                 onChange={handleInputChange}
               />
             </label>
@@ -63,8 +66,8 @@ const AddHotel = () => {
               Address:
               <input
                 type="text"
-                name="Address"
-                value={hotelDetails.Address}
+                name="address"
+                value={hotelDetails.address}
                 onChange={handleInputChange}
               />
             </label>
@@ -72,8 +75,8 @@ const AddHotel = () => {
               Location:
               <input
                 type="text"
-                name="Location"
-                value={hotelDetails.Location}
+                name="location"
+                value={hotelDetails.location}
                 onChange={handleInputChange}
               />
             </label>
@@ -81,8 +84,8 @@ const AddHotel = () => {
               Country:
               <input
                 type="text"
-                name="Country"
-                value={hotelDetails.Country}
+                name="country"
+                value={hotelDetails.country}
                 onChange={handleInputChange}
               />
             </label>
@@ -90,8 +93,8 @@ const AddHotel = () => {
               Food Style ID:
               <input
                 type="text"
-                name="FoodStyleID"
-                value={hotelDetails.FoodStyleID}
+                name="foodStyle"
+                value={hotelDetails.foodStyle}
                 onChange={handleInputChange}
               />
             </label>
@@ -99,8 +102,8 @@ const AddHotel = () => {
               Rating:
               <input
                 type="number"
-                name="Rating"
-                value={hotelDetails.Rating}
+                name="rating"
+                value={hotelDetails.rating}
                 onChange={handleInputChange}
               />
             </label>
@@ -109,16 +112,16 @@ const AddHotel = () => {
             <label>
               Description:
               <textarea
-                name="Description"
-                value={hotelDetails.Description}
+                name="description"
+                value={hotelDetails.description}
                 onChange={handleInputChange}
               ></textarea>
             </label>
             <label>
               About:
               <textarea
-                name="About"
-                value={hotelDetails.About}
+                name="about"
+                value={hotelDetails.about}
                 onChange={handleInputChange}
               ></textarea>
             </label>
@@ -126,8 +129,8 @@ const AddHotel = () => {
               Price per Night:
               <input
                 type="number"
-                name="PricePerNight"
-                value={hotelDetails.PricePerNight}
+                name="pricePerNight"
+                value={hotelDetails.pricePerNight}
                 onChange={handleInputChange}
               />
             </label>
@@ -135,8 +138,8 @@ const AddHotel = () => {
               Offer (%):
               <input
                 type="number"
-                name="Offer"
-                value={hotelDetails.Offer}
+                name="offer"
+                value={hotelDetails.offer}
                 onChange={handleInputChange}
               />
             </label>
@@ -144,8 +147,8 @@ const AddHotel = () => {
               Site:
               <input
                 type="text"
-                name="Site"
-                value={hotelDetails.Site}
+                name="site"
+                value={hotelDetails.site}
                 onChange={handleInputChange}
               />
             </label>
@@ -169,8 +172,8 @@ const AddHotel = () => {
             <input
               key={index}
               type="text"
-              name={`Url${index}`}
-              value={hotelDetails[`Url${index}`] || ""}
+              name={`url${index}`}
+              value={hotelDetails[`url${index}`] || ""}
               onChange={handleInputChange}
               placeholder={`Image URL ${index}`}
             />
