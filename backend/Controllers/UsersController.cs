@@ -86,6 +86,8 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            Console.WriteLine("Inside post");
+            Console.WriteLine(user);
           if (_context.User == null)
           {
               return Problem("Entity set 'backendContext.User'  is null.");

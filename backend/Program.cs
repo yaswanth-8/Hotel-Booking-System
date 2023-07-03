@@ -27,6 +27,15 @@ namespace backend
                 app.UseSwaggerUI();
             }
 
+            builder.Services.AddCors();
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+
             app.UseAuthorization();
 
 
