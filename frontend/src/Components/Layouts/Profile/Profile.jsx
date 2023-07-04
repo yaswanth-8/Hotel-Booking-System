@@ -1,54 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "../../UI/Modal";
+import axios from "axios";
 import "./Profile.css";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const hotels = [
-    {
-      HotelID: 6,
-      Name: "Alpine Retreat",
-      Address: "Mountain View Drive, Switzerland",
-      Location: "Switzerland",
-      Country: "Switzerland",
-      Url: "https://a0.muscache.com/im/pictures/miso/Hosting-48936440/original/d73cefef-6be0-4de9-886e-7780ac008492.jpeg?im_w=1200",
-      FoodStyleID: "3",
-      Rating: 4.9,
-      Description: "Experience the beauty of the Swiss Alps",
-      About:
-        "Embark on a rejuvenating journey with your family and friends, away from the city into awe-inspiring naturescapes. Upon arriving at this villa, you will be swept away by the little bridge that traverses over a gentle stream, on a three-acre lush lawn. Spacious and welcoming with aesthetically pleasing interiors, all five bedrooms have ensuite bathrooms and are located on the ground level - a thoughtful plan to welcome our youngest and elderly guests.",
-      PricePerNight: 8000,
-      Offer: 25,
-      Site: "Mountain",
-      CheckInDate: "2023-07-01",
-      CheckOutDate: "2023-07-05",
-      Price: 24000,
-    },
-    {
-      HotelID: 8,
-      Name: "Coastal Paradise",
-      Address: "Beachfront Road, Maldives",
-      Location: "Maldives",
-      Country: "Maldives",
-      Url: "https://a0.muscache.com/im/pictures/90c0ab07-d7bd-42f9-b085-f1bca998b0fe.jpg?im_w=1440",
-      FoodStyleID: "5",
-      Rating: 4.7,
-      Description: "Indulge in the ultimate beachfront experience",
-      About:
-        "Escape to a private beach paradise with crystal clear waters and white sandy beaches. Our luxurious resort offers world-class amenities and breathtaking ocean views. Relax, unwind, and create lasting memories in this tropical haven.",
-      PricePerNight: 12000,
-      Offer: 20,
-      Site: "Beach",
-      CheckInDate: "2023-07-15",
-      CheckOutDate: "2023-07-20",
-      Price: 48000,
-    },
-  ];
+  const [hotels, setHotels] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedHotelID, setSelectedHotelID] = useState(null);
 
   const username = sessionStorage.getItem("userName");
   const email = sessionStorage.getItem("userEmail");
+  const navigate = useNavigate();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedHotelID, setSelectedHotelID] = useState(null);
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const id = sessionStorage.getItem("UserID");
+        const response = await axios.get(
+          `http://localhost:5225/api/profile?id=${id}`
+        );
+        setHotels(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
 
   const handleCancel = (hotelId) => {
     setSelectedHotelID(hotelId);
@@ -58,6 +38,18 @@ const Profile = () => {
   const handleCancelConfirmation = () => {
     console.log("Cancelled hotel with ID:", selectedHotelID);
     setIsModalOpen(false);
+
+    axios
+      .delete(`http://localhost:5225/api/bookings/${selectedHotelID}`)
+      .then((response) => {
+        // Handle successful response
+        console.log("Booking cancelled successfully:", response.data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error cancelling booking:", error);
+      });
   };
 
   return (
@@ -67,32 +59,49 @@ const Profile = () => {
         <p className="profile-email">{email}</p>
       </div>
       {hotels.map((hotel) => (
-        <div className="profile-hotel-card" key={hotel.HotelID}>
+        <div className="profile-hotel-card" key={hotel.hotel.hotelID}>
           <div className="profile-hotel-image-container">
-            <img className="profile-hotel-image" src={hotel.Url} alt="Hotel" />
+            <img
+              className="profile-hotel-image"
+              src={hotel.hotel.url1}
+              alt="Hotel"
+            />
           </div>
           <div className="profile-hotel-details">
             <div className="profile-hotel-info">
-              <h3 className="profile-hotel-name">{hotel.Name}</h3>
+              <h3 className="profile-hotel-name">{hotel.hotel.name}</h3>
               <p className="profile-hotel-location">
-                <strong>Location:</strong> {hotel.Location}, {hotel.Country}
+                <strong>Location:</strong> {hotel.hotel.location},{" "}
+                {hotel.hotel.country}
               </p>
               <p className="profile-hotel-checkin">
-                <strong>Check-in:</strong> {hotel.CheckInDate}
+                <strong>Check-in:</strong>{" "}
+                {new Date(hotel.checkInDate).toLocaleDateString("en-GB")}
               </p>
-              <p className="profile-hotel-checkout">
-                <strong>Check-out:</strong> {hotel.CheckOutDate}
+              <p className="profile-hotel-checkin">
+                <strong>Check-in:</strong>{" "}
+                {new Date(hotel.checkOutDate).toLocaleDateString("en-GB")}
               </p>
               <p className="profile-hotel-price">
-                <strong>Price:</strong> ${hotel.Price}
+                <strong>Price:</strong> ${hotel.price}
               </p>
             </div>
-            <button
-              className="profile-cancel-button"
-              onClick={() => handleCancel(hotel.HotelID)}
-            >
-              Cancel
-            </button>
+            <div className="profile-bookings-button-group">
+              <button
+                className="profile-blue-button"
+                onClick={() => {
+                  navigate(`/hotels/${hotel.hotelID}/raisequery`);
+                }}
+              >
+                Raise-Query
+              </button>
+              <button
+                className="profile-cancel-button"
+                onClick={() => handleCancel(hotel.bookingID)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       ))}

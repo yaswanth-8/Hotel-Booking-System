@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Booking.css";
 import axios from "axios";
 import Modal from "../../UI/Modal";
+import { useNavigate } from "react-router-dom";
 
 const Booking = ({ hotel }) => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -13,6 +14,8 @@ const Booking = ({ hotel }) => {
   const [numChildren, setNumChildren] = useState(0);
   const [totalPrice, setTotalPrice] = useState(hotel.pricePerNight);
   const [isModalOpen, setIsModalOpen] = useState(false); // State for controlling the modal
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const navigate = useNavigate();
 
   useEffect(() => {
     calculateTotalPrice();
@@ -44,8 +47,13 @@ const Booking = ({ hotel }) => {
   const handleConfirmBooking = () => {
     setIsModalOpen(false); // Close the modal
 
-    const formattedCheckInDate = checkInDate.toISOString().split("T")[0];
-    const formattedCheckOutDate = checkOutDate.toISOString().split("T")[0];
+    const CheckIn = new Date(checkInDate);
+    CheckIn.setDate(CheckIn.getDate() + 1);
+    const formattedCheckInDate = CheckIn.toISOString().split("T")[0];
+
+    const CheckOut = new Date(checkOutDate);
+    CheckOut.setDate(CheckOut.getDate() + 1);
+    const formattedCheckOutDate = CheckOut.toISOString().split("T")[0];
 
     const bookingData = {
       user: {
@@ -144,15 +152,32 @@ const Booking = ({ hotel }) => {
       </button>
 
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
-        <div className="modal-content">
-          <h3>Confirm Booking</h3>
-          <p>Are you sure you want to book?</p>
-          <div className="modal-buttons">
-            <button className="modal-confirm" onClick={handleConfirmBooking}>
-              Confirm
-            </button>
+        {isLoggedIn ? (
+          <div className="modal-content">
+            <h3>Confirm Booking</h3>
+            <p>Are you sure you want to book?</p>
+            <div className="modal-buttons">
+              <button className="modal-confirm" onClick={handleConfirmBooking}>
+                Confirm
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="modal-content">
+            <h1>😕</h1>
+            <p>Please SignIn to continue Booking</p>
+            <div className="modal-buttons">
+              <button
+                className="modal-confirm"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Sign In
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

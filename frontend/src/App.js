@@ -18,7 +18,7 @@ import Profile from "./Components/Layouts/Profile/Profile";
 import { useSelector } from "react-redux";
 
 function App() {
-  const [isAuthVisible, setIsAuthVisible] = useState(false);
+  const [isAuthVisible, setIsAuthVisible] = useState(true);
 
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
   const checkLogInfromStore = useSelector((state) => state.auth.user);

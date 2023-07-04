@@ -46,10 +46,6 @@ function HotelDetails() {
     navigate(`/hotels/${hotel.hotelID}/reviews`);
   };
 
-  const raiseQueryHandler = () => {
-    navigate(`/hotels/${hotel.hotelID}/raisequery`);
-  };
-
   return (
     <div className="hotel-details-details">
       <div className="hotel-details-data">
@@ -131,9 +127,6 @@ function HotelDetails() {
         <div className="details-page-button">
           <button className="blue-button" onClick={showReviewsHandler}>
             Reviews
-          </button>
-          <button className="blue-button" onClick={raiseQueryHandler}>
-            Raise-Query
           </button>
         </div>
         <hr />
