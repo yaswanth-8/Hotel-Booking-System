@@ -5,7 +5,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Navbar from "./Components/Layouts/Navbar/Navbar";
 import Welcomepage from "./Components/HomeScreen/Welcomepage";
 import "./App.css";
@@ -19,7 +18,7 @@ import Profile from "./Components/Layouts/Profile/Profile";
 
 function App() {
   const [isAuthVisible, setIsAuthVisible] = useState(false);
-  const authUser = useSelector((state) => state.auth.user);
+  const authUser = sessionStorage.getItem("auth-user");
 
   const handleAuthenticateClick = (state) => {
     if (state === "open") {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "../../UI/Modal";
 import "./AddHotel.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddHotel = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,8 @@ const AddHotel = () => {
     offer: 0,
     site: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -40,7 +43,7 @@ const AddHotel = () => {
       .post("http://localhost:5225/api/Hotels", hotelDetails)
       .then((response) => {
         console.log("Hotel created:", response.data);
-        // Perform any further actions or handle the response data as needed
+        navigate("/hotels");
       })
       .catch((error) => {
         console.error("Error creating hotel:", error);

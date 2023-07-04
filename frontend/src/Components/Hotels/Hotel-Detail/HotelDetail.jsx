@@ -1,78 +1,132 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./HotelDetail.css";
 import Booking from "../../Layouts/Booking/Booking";
 import EditHotelDetails from "./Edit-Hotel-Detail/EditHotelDetails";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetWeather from "../../../Hooks/useGetWeather";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Static from "../../Layouts/Static/Static";
+import useGetHotel from "../../../Hooks/useGetHotel";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+function WeatherWrapper({ location }) {
+  const weather = useGetWeather(location);
+
+  return <span>{weather ? `${weather} °C` : "NA"}</span>;
+}
 
 function HotelDetails() {
-  const hotel = useSelector((state) => state.hotel);
+  const { id } = useParams();
+  const { hotel, loading, error } = useGetHotel(id);
+
   const auth = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
-  const weather = useGetWeather(hotel.Location);
+  const [showFullText, setShowFullText] = useState(false);
 
-  if (!hotel) {
+  const handleShowMore = () => {
+    setShowFullText(true);
+  };
+
+  const handleShowLess = () => {
+    setShowFullText(false);
+  };
+
+  if (loading || !hotel) {
     return <div>Loading...</div>; // Render a loading state while the hotel data is being fetched
   }
 
+  if (error) {
+    return <div>Error: {error.message}</div>; // Render an error message if there's an error fetching the hotel data
+  }
+
   const showReviewsHandler = () => {
-    navigate(`/hotels/${hotel.HotelID}/reviews`);
+    navigate(`/hotels/${hotel.hotelID}/reviews`);
   };
+
   const raiseQueryHandler = () => {
-    navigate(`/hotels/${hotel.HotelID}/raisequery`);
+    navigate(`/hotels/${hotel.hotelID}/raisequery`);
   };
 
   return (
     <div className="hotel-details-details">
       <div className="hotel-details-data">
-        <h2 className="hotel-details-name">{hotel.Name}</h2>
+        <h2 className="hotel-details-name">{hotel.name}</h2>
         <div className="image-grid">
           <Carousel showThumbs={false}>
-            <img src={hotel.Url} alt={hotel.Name} />
-            <img src={hotel.Url} alt={hotel.Name} />
-            <img src={hotel.Url} alt={hotel.Name} />
-            <img src={hotel.Url} alt={hotel.Name} />
-            <img src={hotel.Url} alt={hotel.Name} />
+            <img src={hotel.url1} alt={hotel.name} />
+            <img src={hotel.url2} alt={hotel.name} />
+            <img src={hotel.url3} alt={hotel.name} />
+            <img src={hotel.url4} alt={hotel.name} />
+            <img src={hotel.url5} alt={hotel.name} />
           </Carousel>
         </div>
         <hr />
         <div className="hotelDetails">
           <hr />
-          <p className="hotel-details-about">{hotel.About}</p>
+
+          {hotel.about.length > 210 ? (
+            <p className="hotel-details-about">
+              {showFullText ? (
+                hotel.about
+              ) : (
+                <>
+                  {hotel.about.slice(0, 200)}
+                  {hotel.about.length > 200 && "..."}
+                </>
+              )}
+              {!showFullText && hotel.about.length > 200 && (
+                <button className="small-blue-button" onClick={handleShowMore}>
+                  <FontAwesomeIcon icon={faChevronDown} />
+                </button>
+              )}
+              {showFullText && (
+                <button className="small-blue-button" onClick={handleShowLess}>
+                  <FontAwesomeIcon icon={faChevronUp} />
+                </button>
+              )}
+            </p>
+          ) : (
+            <p className="hotel-details-about">{hotel.about}</p>
+          )}
+
           <hr />
           <p>
-            <strong>Address:</strong> {hotel.Address}
+            <strong>Address:</strong> {hotel.address}
           </p>
           <p>
-            <strong>Location:</strong> {hotel.Location}
+            <strong>Location:</strong> {hotel.location}
           </p>
           <p>
-            <strong>Country:</strong> {hotel.Country}
+            <strong>Country:</strong> {hotel.country}
+          </p>
+          {hotel.location ? (
+            <p>
+              <strong>Current Weather:</strong>
+              <WeatherWrapper location={hotel.location} />
+            </p>
+          ) : (
+            ""
+          )}
+          <p>
+            <strong>Rating:</strong> {hotel.rating}
           </p>
           <p>
-            <strong>Current Weather:</strong> {weather} °C
+            <strong>Description:</strong> {hotel.description}
           </p>
           <p>
-            <strong>Rating:</strong> {hotel.Rating}
+            <strong>Price Per Night:</strong> {hotel.pricePerNight}
           </p>
           <p>
-            <strong>Description:</strong> {hotel.Description}
+            <strong>Offer:</strong> {hotel.offer}% off
           </p>
           <p>
-            <strong>Price Per Night:</strong> {hotel.PricePerNight}
-          </p>
-          <p>
-            <strong>Offer:</strong> {hotel.Offer}% off
-          </p>
-          <p>
-            <strong>Site:</strong> {hotel.Site}
+            <strong>Site:</strong> {hotel.site}
           </p>
           <hr />
-          <Static />
+          <Static site={hotel.site} />
         </div>
         <div className="details-page-button">
           <button className="blue-button" onClick={showReviewsHandler}>
@@ -89,7 +143,7 @@ function HotelDetails() {
         {auth === "admin" ? (
           <EditHotelDetails hotel={hotel} />
         ) : (
-          <Booking price={hotel.PricePerNight} offer={hotel.Offer} />
+          <Booking price={hotel.pricePerNight} offer={hotel.offer} />
         )}
       </div>
     </div>

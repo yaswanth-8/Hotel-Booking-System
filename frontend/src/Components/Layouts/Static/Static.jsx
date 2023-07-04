@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCar,
   faDoorOpen,
-  faMountain,
   faMountainSun,
   faPaw,
+  faPersonShelter,
   faPersonSwimming,
   faTv,
   faVideo,
@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 
-const Static = () => {
+const Static = ({ site }) => {
   return (
     <div className="static-container">
       <h2>Self check-in</h2>
@@ -48,17 +48,17 @@ const Static = () => {
                   style={{ color: "#000000" }}
                 />
               </span>
-              Mountain view
+              {site}
             </li>
             <li>
               <span className="static-icon">
                 <FontAwesomeIcon
-                  icon={faMountain}
+                  icon={faPersonShelter}
                   style={{ color: "#000000" }}
                   size="lg"
                 />
               </span>
-              Valley view
+              24 x 7 service
             </li>
             <li>
               <span className="static-icon">

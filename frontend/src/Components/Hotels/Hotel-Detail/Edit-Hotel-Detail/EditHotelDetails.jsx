@@ -1,10 +1,25 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const EditHotelDetails = ({ hotel }) => {
   const [editedHotel, setEditedHotel] = useState(hotel);
 
   const handleEdit = () => {
-    // Perform actions with the editedHotel object
+    console.log(editedHotel);
+
+    axios
+      .put(
+        `http://localhost:5225/api/hotels/${editedHotel.hotelID}`,
+        editedHotel
+      )
+      .then((response) => {
+        console.log("PUT request successful");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error in PUT request:", error);
+        // Handle the error or display an error message
+      });
   };
 
   const handleChange = (e) => {
@@ -22,28 +37,28 @@ const EditHotelDetails = ({ hotel }) => {
         <input
           type="text"
           className="form-control"
-          name="Name"
-          value={editedHotel.Name}
+          name="name"
+          value={editedHotel.name}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label className="form-label">Address:</label>
+        <label className="form-label">address:</label>
         <input
           type="text"
           className="form-control"
-          name="Address"
-          value={editedHotel.Address}
+          name="address"
+          value={editedHotel.address}
           onChange={handleChange}
         />
       </div>
       <div className="form-group">
-        <label className="form-label">Location:</label>
+        <label className="form-label">location:</label>
         <input
           type="text"
           className="form-control"
-          name="Location"
-          value={editedHotel.Location}
+          name="location"
+          value={editedHotel.location}
           onChange={handleChange}
         />
       </div>
@@ -52,8 +67,8 @@ const EditHotelDetails = ({ hotel }) => {
         <input
           type="text"
           className="form-control"
-          name="Country"
-          value={editedHotel.Country}
+          name="country"
+          value={editedHotel.country}
           onChange={handleChange}
         />
       </div>
@@ -62,8 +77,8 @@ const EditHotelDetails = ({ hotel }) => {
         <input
           type="number"
           className="form-control"
-          name="Rating"
-          value={editedHotel.Rating}
+          name="rating"
+          value={editedHotel.rating}
           onChange={handleChange}
         />
       </div>
@@ -71,8 +86,8 @@ const EditHotelDetails = ({ hotel }) => {
         <label className="form-label">Description:</label>
         <textarea
           className="form-control"
-          name="Description"
-          value={editedHotel.Description}
+          name="description"
+          value={editedHotel.description}
           onChange={handleChange}
         />
       </div>
@@ -81,8 +96,8 @@ const EditHotelDetails = ({ hotel }) => {
         <input
           type="number"
           className="form-control"
-          name="PricePerNight"
-          value={editedHotel.PricePerNight}
+          name="pricePerNight"
+          value={editedHotel.pricePerNight}
           onChange={handleChange}
         />
       </div>
@@ -91,8 +106,8 @@ const EditHotelDetails = ({ hotel }) => {
         <input
           type="number"
           className="form-control"
-          name="Offer"
-          value={editedHotel.Offer}
+          name="offer"
+          value={editedHotel.offer}
           onChange={handleChange}
         />
       </div>
@@ -101,8 +116,59 @@ const EditHotelDetails = ({ hotel }) => {
         <input
           type="text"
           className="form-control"
-          name="Site"
-          value={editedHotel.Site}
+          name="site"
+          value={editedHotel.site}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-label">Image 1:</label>
+        <input
+          type="string"
+          className="form-control"
+          name="url1"
+          value={editedHotel.url1}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">Image 2:</label>
+        <input
+          type="string"
+          className="form-control"
+          name="url2"
+          value={editedHotel.url2}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-label">Image 3:</label>
+        <input
+          type="string"
+          className="form-control"
+          name="url3"
+          value={editedHotel.url3}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-label">Image 4:</label>
+        <input
+          type="string"
+          className="form-control"
+          name="url4"
+          value={editedHotel.url4}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-label">Image 5:</label>
+        <input
+          type="string"
+          className="form-control"
+          name="url5"
+          value={editedHotel.url5}
           onChange={handleChange}
         />
       </div>

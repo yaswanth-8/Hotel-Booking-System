@@ -12,6 +12,7 @@
 
 .navbar-title {
   font-weight: bold;
+  cursor: pointer;
 }
 
 .authenticate-button {

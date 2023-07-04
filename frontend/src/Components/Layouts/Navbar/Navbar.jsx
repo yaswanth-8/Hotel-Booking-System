@@ -45,9 +45,15 @@ function Navbar({ title, onAuthenticateClick }) {
     sessionStorage.clear();
     navigate("/");
   };
+  const displayHotelsHandler = () => {
+    navigate("/hotels");
+  };
+
   return (
     <div className="navbar">
-      <div className="navbar-title">{title}</div>
+      <div className="navbar-title" onClick={displayHotelsHandler}>
+        {title}
+      </div>
       <div className="navbar-buttons">
         {auth === "admin" ? (
           <button
