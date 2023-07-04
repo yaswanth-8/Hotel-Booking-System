@@ -44,8 +44,8 @@ const Profile = () => {
     },
   ];
 
-  const username = "John Doe";
-  const email = "johndoe@example.com";
+  const username = sessionStorage.getItem("userName");
+  const email = sessionStorage.getItem("userEmail");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedHotelID, setSelectedHotelID] = useState(null);

@@ -15,11 +15,6 @@ function Homescreen() {
   return (
     <div className="Homescreen-container">
       <div className="filter-button" onClick={toggleFilterVisibility}>
-        {/* <FontAwesomeIcon
-          icon={faAnglesLeft}
-          size="xl"
-          style={{ color: "#c7c7c7" }}
-        /> */}
         {!isFilterVisible ? (
           <FontAwesomeIcon
             icon={faAnglesRight}
@@ -39,7 +34,9 @@ function Homescreen() {
           <Filters />
         </div>
       )}
-      <Hotels />
+      <div className="homescreen-hotels-container">
+        <Hotels />
+      </div>
     </div>
   );
 }

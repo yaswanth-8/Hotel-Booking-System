@@ -52,6 +52,10 @@ function Login() {
         } else {
           dispatch(signIn(response.data.name));
         }
+        sessionStorage.setItem("auth-user", response.data.role);
+        sessionStorage.setItem("userName", response.data.name);
+        sessionStorage.setItem("userEmail", response.data.email);
+        sessionStorage.setItem("isLoggedIn", true);
         navigate("/hotels");
       } catch (error) {
         console.log("invalid");

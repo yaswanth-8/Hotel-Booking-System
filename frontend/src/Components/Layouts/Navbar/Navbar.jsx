@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "../../../store/Auth-Slice/authSlice";
+import { signIn, signOut } from "../../../store/Auth-Slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHotel, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar({ title, onAuthenticateClick }) {
-  const auth = useSelector((state) => state.auth.user);
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const checkLogInfromStore = useSelector((state) => state.auth.user);
+  const auth = isLoggedIn
+    ? sessionStorage.getItem("auth-user")
+    : checkLogInfromStore;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(signIn(sessionStorage.getItem("auth-user")));
+    }
+  }, [dispatch, isLoggedIn]);
   const authenticateHandler = () => {
     if (window.location.pathname !== "/") {
       onAuthenticateClick("open");
@@ -34,6 +42,8 @@ function Navbar({ title, onAuthenticateClick }) {
 
   const signOutHandler = () => {
     dispatch(signOut());
+    sessionStorage.clear();
+    navigate("/");
   };
   return (
     <div className="navbar">

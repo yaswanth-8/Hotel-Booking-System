@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 import Navbar from "./Components/Layouts/Navbar/Navbar";
 import Welcomepage from "./Components/HomeScreen/Welcomepage";
 import "./App.css";
@@ -13,6 +19,7 @@ import Profile from "./Components/Layouts/Profile/Profile";
 
 function App() {
   const [isAuthVisible, setIsAuthVisible] = useState(false);
+  const authUser = useSelector((state) => state.auth.user);
 
   const handleAuthenticateClick = (state) => {
     if (state === "open") {
@@ -20,6 +27,20 @@ function App() {
     } else {
       setIsAuthVisible(!isAuthVisible);
     }
+  };
+
+  const AdminPrivateRoute = ({ element }) => {
+    return authUser === "admin" ? element : <Navigate to="/" replace />;
+  };
+  const UserPrivateRoute = ({ element }) => {
+    return authUser !== "admin" && authUser !== "no-user" ? (
+      element
+    ) : (
+      <Navigate to="/" replace />
+    );
+  };
+  const AdminAndUserPrivateRoute = ({ element }) => {
+    return authUser !== "no-user" ? element : <Navigate to="/" replace />;
   };
 
   return (
@@ -37,11 +58,23 @@ function App() {
           />
           <Route path="/hotels/:id" element={<HotelDetails />} />
           <Route path="/hotels" element={<Homescreen />} />
-          <Route path="/hotels/add" element={<AddHotel />} />
+          <Route
+            path="/hotels/add"
+            element={<AdminPrivateRoute element={<AddHotel />} />}
+          />
           <Route path="/hotels/:id/reviews" element={<Reviews />} />
-          <Route path="/hotels/:id/raisequery" element={<RaiseQuery />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/hotels/:id/raisequery"
+            element={<UserPrivateRoute element={<RaiseQuery />} />}
+          />
+          <Route
+            path="/notifications"
+            element={<AdminAndUserPrivateRoute element={<Notifications />} />}
+          />
+          <Route
+            path="/profile"
+            element={<UserPrivateRoute element={<Profile />} />}
+          />
         </Routes>
       </div>
     </Router>
