@@ -32,6 +32,24 @@ namespace backend.Controllers
             return await _context.Booking.Include(x=>x.User).Include(x=>x.Hotel).ToListAsync();
         }
 
+        [HttpGet]
+        [Route("/api/profile")]
+        public async Task<ActionResult<IEnumerable<Booking>>> GetBookingProfile(int id)
+        {
+            Console.WriteLine("Inside profile function " + id);
+            // Assuming "id" corresponds to the User ID field
+            var userBookings = await _context.Booking.Include(x => x.User).Include(x => x.Hotel).Where(b => b.User.UserID == id).ToListAsync();
+
+            if (userBookings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userBookings);
+        }
+
+
+
         // GET: api/Bookings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Booking>> GetBooking(int id)
