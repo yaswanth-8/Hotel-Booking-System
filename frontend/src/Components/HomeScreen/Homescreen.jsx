@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 
 function Homescreen() {
-  const [isFilterVisible, setFilterVisible] = useState(true);
+  const [isFilterVisible, setFilterVisible] = useState(false);
 
   const toggleFilterVisibility = () => {
     setFilterVisible(!isFilterVisible);

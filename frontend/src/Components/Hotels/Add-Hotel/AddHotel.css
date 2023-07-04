@@ -1,43 +1,53 @@
-.add-hotel-container {
-  display: flex;
-  justify-content: center;
-  padding-top: 60px;
+.addHotel-form {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  padding: 50px;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-hotel-form {
-  width: 900px;
+.addHotel-field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.addHotel-field-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.addHotel-field-container input[type="text"],
+.addHotel-field-container input[type="number"],
+.addHotel-field-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
   margin-bottom: 20px;
 }
 
-.add-hotel-form label {
-  margin-bottom: 10px;
-}
-
-.add-hotel-form input,
-.add-hotel-form textarea {
-  width: 100%;
-  padding: 5px;
-  margin-top: 5px;
-}
-
-.add-image-button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #00415a;
+.addHotel-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
   color: #fff;
+  margin: 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 14px;
 }
 
-.submit-button {
-  display: block;
-  padding: 8px 12px;
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.addHotel-button:hover {
+  background-color: #45a049;
+}
+
+.add-hotel-container {
+  justify-content: center;
+  padding-top: 60px;
 }
 
 .modal-content {
@@ -73,19 +83,13 @@
   margin-top: 10px;
 }
 
-.add-hotel-field-container {
-  display: flex;
-  flex-direction: column;
-}
-
-@media screen and (min-width: 768px) {
-  .add-hotel-field-container {
-    flex-direction: row;
+@media (max-width: 600px) {
+  .addHotel-form {
+    max-width: 100%;
+    padding: 25px;
   }
-
-  .column-left,
-  .column-right {
-    flex-basis: 50%;
-    margin-left: 20px;
+  .add-hotel-container {
+    justify-content: center;
+    padding-top: 40px;
   }
 }

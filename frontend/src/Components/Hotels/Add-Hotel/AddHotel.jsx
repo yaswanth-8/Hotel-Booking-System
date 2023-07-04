@@ -50,121 +50,122 @@ const AddHotel = () => {
 
   return (
     <div className="add-hotel-container">
-      <form className="add-hotel-form">
-        <div className="add-hotel-field-container">
-          <div className="column-left">
-            <label>
-              Hotel Name:
-              <input
-                type="text"
-                name="name"
-                value={hotelDetails.name}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Address:
-              <input
-                type="text"
-                name="address"
-                value={hotelDetails.address}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Location:
-              <input
-                type="text"
-                name="location"
-                value={hotelDetails.location}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Country:
-              <input
-                type="text"
-                name="country"
-                value={hotelDetails.country}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Food Style ID:
-              <input
-                type="text"
-                name="foodStyle"
-                value={hotelDetails.foodStyle}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Rating:
-              <input
-                type="number"
-                name="rating"
-                value={hotelDetails.rating}
-                onChange={handleInputChange}
-              />
-            </label>
-          </div>
-          <div className="column-right">
-            <label>
-              Description:
-              <textarea
-                name="description"
-                value={hotelDetails.description}
-                onChange={handleInputChange}
-              ></textarea>
-            </label>
-            <label>
-              About:
-              <textarea
-                name="about"
-                value={hotelDetails.about}
-                onChange={handleInputChange}
-              ></textarea>
-            </label>
-            <label>
-              Price per Night:
-              <input
-                type="number"
-                name="pricePerNight"
-                value={hotelDetails.pricePerNight}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Offer (%):
-              <input
-                type="number"
-                name="offer"
-                value={hotelDetails.offer}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Site:
-              <input
-                type="text"
-                name="site"
-                value={hotelDetails.site}
-                onChange={handleInputChange}
-              />
-            </label>
-            <button
-              type="button"
-              className="add-image-button"
-              onClick={handleAddImageUrl}
-            >
-              Add Images
-            </button>
-          </div>
+      <form className="addHotel-form">
+        <div className="addHotel-field-container">
+          <label>
+            Hotel Name:
+            <input
+              type="text"
+              name="name"
+              value={hotelDetails.name}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Address:
+            <input
+              type="text"
+              name="address"
+              value={hotelDetails.address}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Location:
+            <input
+              type="text"
+              name="location"
+              value={hotelDetails.location}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Country:
+            <input
+              type="text"
+              name="country"
+              value={hotelDetails.country}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Food Style:
+            <input
+              type="text"
+              name="foodStyle"
+              value={hotelDetails.foodStyle}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Rating:
+            <input
+              type="number"
+              name="rating"
+              value={hotelDetails.rating}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Description:
+            <textarea
+              name="description"
+              value={hotelDetails.description}
+              onChange={handleInputChange}
+            ></textarea>
+          </label>
+          <label>
+            About:
+            <textarea
+              name="about"
+              value={hotelDetails.about}
+              onChange={handleInputChange}
+            ></textarea>
+          </label>
+          <label>
+            Price per Night:
+            <input
+              type="number"
+              name="pricePerNight"
+              value={hotelDetails.pricePerNight}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Offer (%):
+            <input
+              type="number"
+              name="offer"
+              value={hotelDetails.offer}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Site:
+            <input
+              type="text"
+              name="site"
+              value={hotelDetails.site}
+              onChange={handleInputChange}
+            />
+          </label>
+          <button
+            type="button"
+            className="addHotel-button"
+            onClick={handleAddImageUrl}
+          >
+            Add Images
+          </button>
+          <button
+            type="button"
+            className="addHotel-button"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
         </div>
-        <button type="button" className="submit-button" onClick={handleSubmit}>
-          Submit
-        </button>
       </form>
+
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <div className="modal-content">
           <h3>Enter Image URLs</h3>

@@ -5,6 +5,7 @@ import { signOut } from "../../../store/Auth-Slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faHotel, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar({ title, onAuthenticateClick }) {
   const auth = useSelector((state) => state.auth.user);
@@ -38,26 +39,42 @@ function Navbar({ title, onAuthenticateClick }) {
     <div className="navbar">
       <div className="navbar-title">{title}</div>
       <div className="navbar-buttons">
-        <button className="authenticate-button" onClick={addHotelRouteHandler}>
-          Add Hotel
-        </button>
-        <button
-          className="authenticate-button"
-          onClick={showNotificationHandler}
-        >
-          🔔
-        </button>
-        <button className="authenticate-button" onClick={showProfileHandler}>
-          <FontAwesomeIcon icon={faUser} />
-        </button>
+        {auth === "admin" ? (
+          <button
+            className="authenticate-button"
+            onClick={addHotelRouteHandler}
+          >
+            + <FontAwesomeIcon icon={faHotel} />
+          </button>
+        ) : (
+          ""
+        )}
 
+        {auth !== "no-user" ? (
+          <button
+            className="authenticate-button"
+            onClick={showNotificationHandler}
+          >
+            🔔
+          </button>
+        ) : (
+          ""
+        )}
+
+        {auth !== "admin" && auth !== "no-user" ? (
+          <button className="authenticate-button" onClick={showProfileHandler}>
+            <FontAwesomeIcon icon={faUser} />
+          </button>
+        ) : (
+          ""
+        )}
         {auth === "no-user" ? (
           <button className="authenticate-button" onClick={authenticateHandler}>
             Authenticate
           </button>
         ) : (
           <button className="authenticate-button" onClick={signOutHandler}>
-            Log out
+            <FontAwesomeIcon icon={faRightFromBracket} />
           </button>
         )}
       </div>
