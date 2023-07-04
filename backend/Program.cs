@@ -10,6 +10,7 @@ namespace backend
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<backendContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("backendContext") ?? throw new InvalidOperationException("Connection string 'backendContext' not found.")));
+            
 
             // Add services to the container.
 

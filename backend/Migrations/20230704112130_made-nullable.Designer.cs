@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(backendContext))]
-    partial class backendContextModelSnapshot : ModelSnapshot
+    [Migration("20230704112130_made-nullable")]
+    partial class madenullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,44 +24,6 @@ namespace backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("backend.Models.Booking", b =>
-                {
-                    b.Property<int>("BookingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingID"));
-
-                    b.Property<int?>("AdultCount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ChildrenCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HotelID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookingID");
-
-                    b.HasIndex("HotelID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Booking");
-                });
 
             modelBuilder.Entity("backend.Models.Hotel", b =>
                 {
@@ -144,21 +109,6 @@ namespace backend.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("backend.Models.Booking", b =>
-                {
-                    b.HasOne("backend.Models.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelID");
-
-                    b.HasOne("backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID");
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
