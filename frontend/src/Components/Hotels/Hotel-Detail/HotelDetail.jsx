@@ -143,7 +143,7 @@ function HotelDetails() {
         {auth === "admin" ? (
           <EditHotelDetails hotel={hotel} />
         ) : (
-          <Booking price={hotel.pricePerNight} offer={hotel.offer} />
+          <Booking hotel={hotel} />
         )}
       </div>
     </div>

@@ -92,6 +92,15 @@ const EditHotelDetails = ({ hotel }) => {
         />
       </div>
       <div className="form-group">
+        <label className="form-label">About:</label>
+        <textarea
+          className="form-control"
+          name="about"
+          value={editedHotel.about}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
         <label className="form-label">Price Per Night:</label>
         <input
           type="number"

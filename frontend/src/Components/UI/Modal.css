@@ -17,6 +17,7 @@
   padding: 20px;
   border-radius: 5px;
   max-width: 400px;
+  z-index: 1000;
 }
 
 /* Modal.css */
@@ -61,6 +62,7 @@
   padding: 8px 16px;
   margin-left: 10px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .modal-confirm {
@@ -79,3 +81,11 @@
 }
 
 /* Add any additional styling for the modal content here */
+
+@media (max-width: 768px) {
+  .modal-close {
+    position: absolute;
+    top: 60px;
+    right: 30px;
+  }
+}

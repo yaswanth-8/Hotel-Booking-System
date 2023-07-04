@@ -52,9 +52,11 @@ function Login() {
         } else {
           dispatch(signIn(response.data.name));
         }
+        console.log("In loginjs role is" + response.data.role);
         sessionStorage.setItem("auth-user", response.data.role);
         sessionStorage.setItem("userName", response.data.name);
         sessionStorage.setItem("userEmail", response.data.email);
+        sessionStorage.setItem("UserID", response.data.userID);
         sessionStorage.setItem("isLoggedIn", true);
         navigate("/hotels");
       } catch (error) {
