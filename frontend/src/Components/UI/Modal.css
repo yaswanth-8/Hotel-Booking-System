@@ -24,8 +24,8 @@
 
 .modal-close {
   position: absolute;
-  top: 50px;
-  right: 10px;
+  top: 30%;
+  right: 30%;
   width: 30px;
   height: 30px;
   background-color: red;
@@ -85,7 +85,7 @@
 @media (max-width: 768px) {
   .modal-close {
     position: absolute;
-    top: 60px;
-    right: 30px;
+    top: 35%;
+    right: 10px;
   }
 }

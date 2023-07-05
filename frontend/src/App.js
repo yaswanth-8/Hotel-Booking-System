@@ -69,7 +69,7 @@ function App() {
           />
           <Route path="/hotels/:id/reviews" element={<Reviews />} />
           <Route
-            path="/hotels/:id/raisequery"
+            path="/raisequery"
             element={<UserPrivateRoute element={<RaiseQuery />} />}
           />
           <Route

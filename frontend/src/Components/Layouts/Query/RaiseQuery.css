@@ -15,7 +15,8 @@
   margin-top: 0;
 }
 
-.raise-query textarea {
+.raise-query textarea,
+.raise-query input {
   width: 80%;
   margin-bottom: 10px;
   padding: 10px;
@@ -24,7 +25,7 @@
   resize: vertical;
 }
 
-.raise-query button {
+.raise-query .green-button {
   width: 80%;
   padding: 10px;
   background-color: #4caf50;
@@ -36,4 +37,27 @@
 
 .raise-query button:hover {
   background-color: #45a049;
+}
+
+/* Media queries for mobile responsiveness */
+
+@media (max-width: 768px) {
+  .raise-query {
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    top: unset;
+    left: unset;
+    transform: none;
+  }
+
+  .raise-query textarea,
+  .raise-query input {
+    width: 90%;
+  }
+
+  .raise-query .green-button {
+    width: 100%;
+  }
 }

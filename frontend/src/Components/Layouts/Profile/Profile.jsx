@@ -88,14 +88,6 @@ const Profile = () => {
             </div>
             <div className="profile-bookings-button-group">
               <button
-                className="profile-blue-button"
-                onClick={() => {
-                  navigate(`/hotels/${hotel.hotelID}/raisequery`);
-                }}
-              >
-                Raise-Query
-              </button>
-              <button
                 className="profile-cancel-button"
                 onClick={() => handleCancel(hotel.bookingID)}
               >
@@ -124,6 +116,14 @@ const Profile = () => {
           </div>
         </div>
       </Modal>
+      <button
+        className="profile-blue-button"
+        onClick={() => {
+          navigate(`/raisequery`);
+        }}
+      >
+        Raise-Query
+      </button>
     </div>
   );
 };
