@@ -1,40 +1,40 @@
 import React, { useState } from "react";
 
 function Filter({ filterList, heading, onFilterChange }) {
-  const [checkedValues, setCheckedValues] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(null);
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
     const isChecked = event.target.checked;
 
-    let updatedCheckedValues = [...checkedValues];
-
     if (isChecked) {
-      updatedCheckedValues.push(value);
+      setSelectedValue(value);
+      onFilterChange([value, heading]);
     } else {
-      updatedCheckedValues = updatedCheckedValues.filter(
-        (val) => val !== value
-      );
+      setSelectedValue(null);
+      onFilterChange(null);
     }
-
-    setCheckedValues(updatedCheckedValues);
-    onFilterChange(updatedCheckedValues);
   };
 
   return (
     <div className="filter-section">
       <h3>{heading}</h3>
-      {filterList.map((filter) => (
-        <div key={filter}>
-          <input
-            type="checkbox"
-            id={filter}
-            value={filter}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor={filter}>{filter}</label>
-        </div>
-      ))}
+      {filterList.map((filter) => {
+        const isSelected = String(selectedValue) === String(filter);
+
+        return (
+          <div key={filter}>
+            <input
+              type="checkbox"
+              id={filter}
+              value={filter.toString()}
+              checked={isSelected}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor={filter}>{filter}</label>
+          </div>
+        );
+      })}
     </div>
   );
 }

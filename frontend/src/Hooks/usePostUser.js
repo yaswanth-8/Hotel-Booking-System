@@ -29,7 +29,9 @@ const usePostUser = () => {
       return data;
     } catch (error) {
       setIsLoading(false);
-      setError(error.message);
+      alert("Email Id already Exist");
+      window.location.reload();
+      setError("Email Id Exists");
     }
   };
 

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowsRotate,
+  faCircleCheck,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import usePostUser from "../../../Hooks/usePostUser";
@@ -47,7 +48,10 @@ function SignUp() {
           displayPassword: true,
           inputType: "password",
         }));
-      }, 1000);
+      }, 1500);
+      if (error) {
+        console.log("email id exists");
+      }
     } else if (!updatedFormData.password) {
       console.log(inputValue);
       setFormData((prev) => ({ ...prev, password: inputValue }));
@@ -106,7 +110,11 @@ function SignUp() {
         <div className="left">Enter your Password</div>
       )}
 
-      {formData.password && <div className="right">{formData.password}</div>}
+      {formData.password && (
+        <div className="right">
+          {String.fromCharCode(8226).repeat(formData.password.length)}
+        </div>
+      )}
 
       {formData.displayRetypePassword && (
         <div className="left">Retype your Password</div>
@@ -114,7 +122,12 @@ function SignUp() {
 
       {formData.retypePassword && (
         <div className={formData.passwordFieldPosition}>
-          {formData.retypePassword}
+          {String.fromCharCode(8226).repeat(formData.retypePassword.length)}
+          <FontAwesomeIcon
+            icon={faCircleCheck}
+            style={{ color: "#00d60e" }}
+            size="lg"
+          />
         </div>
       )}
 

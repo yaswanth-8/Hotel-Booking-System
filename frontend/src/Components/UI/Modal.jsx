@@ -6,12 +6,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 
   return (
     <div className="modal-background">
-      <div className="modal-content">
-        <button className="modal-close" onClick={onClose}>
-          X
-        </button>
-        {children}
-      </div>
+      <div className="modal-content">{children}</div>
     </div>
   );
 };

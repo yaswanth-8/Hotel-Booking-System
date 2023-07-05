@@ -8,6 +8,7 @@
   position: fixed;
   width: 100%;
   z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2); /* Add this line for the shadow */
 }
 
 .navbar-title {
@@ -29,6 +30,11 @@
 
 @media (max-width: 600px) {
   .navbar {
-    padding: 10px 5px;
+    padding: 10px 15px 10px 10px;
+  }
+
+  .navbar-buttons button {
+    margin-left: 10px;
+    border-radius: 8px;
   }
 }

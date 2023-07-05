@@ -70,6 +70,7 @@ const Notifications = () => {
     } catch (error) {
       console.error("Error updating notification status:", error);
     }
+    fetchNotifications();
   };
 
   const handleResolve = async (notificationId) => {
@@ -99,6 +100,7 @@ const Notifications = () => {
     } catch (error) {
       console.error("Error resolving notification:", error);
     }
+    fetchNotifications();
   };
 
   const openDenyModal = (notificationId) => {
@@ -233,7 +235,15 @@ const Notifications = () => {
       <Modal isOpen={showDenyModal} onClose={closeModal}>
         <p>😮 Do you want to deny it?</p>
         <button
-          className="modal-ok-button"
+          className="modal-cancel"
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          Cancel
+        </button>
+        <button
+          className="modal-confirm"
           onClick={() => {
             handleDeny(selectedNotification);
             closeModal();

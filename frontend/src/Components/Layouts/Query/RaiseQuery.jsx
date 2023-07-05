@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./RaiseQuery.css";
 import axios from "axios";
 import Modal from "../../UI/Modal"; // Make sure to provide the correct path to the Modal component
+import { useNavigate } from "react-router-dom";
 
 const RaiseQuery = () => {
   const userId = sessionStorage.getItem("UserID");
@@ -9,6 +10,7 @@ const RaiseQuery = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [queryModel, setQueryModel] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const RaiseQuery = () => {
       .post("http://localhost:5225/api/queries", queryModel)
       .then((response) => {
         console.log("Query submitted successfully:", response.data);
+        navigate("/profile");
       })
       .catch((error) => {
         console.log("Error submitting query:", error);

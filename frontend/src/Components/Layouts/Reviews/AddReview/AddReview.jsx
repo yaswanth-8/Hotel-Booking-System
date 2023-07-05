@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddReview = () => {
+const AddReview = ({ fetchData }) => {
   const [newReview, setNewReview] = useState("");
   const hotelId = sessionStorage.getItem("HotelID");
 
@@ -30,8 +30,7 @@ const AddReview = () => {
         );
         console.log("Review submitted:", response.data);
         setNewReview("");
-
-        window.location.reload();
+        fetchData();
       } catch (error) {
         console.log("Error submitting review:", error);
       }

@@ -77,7 +77,7 @@ function Navbar({ title, onAuthenticateClick }) {
           ""
         )}
 
-        {auth !== "admin" && auth !== "no-user" ? (
+        {auth !== "no-user" ? (
           <button className="authenticate-button" onClick={showProfileHandler}>
             <FontAwesomeIcon icon={faUser} />
           </button>

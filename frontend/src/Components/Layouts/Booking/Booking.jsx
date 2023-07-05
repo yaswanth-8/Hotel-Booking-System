@@ -157,6 +157,9 @@ const Booking = ({ hotel }) => {
             <h3>Confirm Booking</h3>
             <p>Are you sure you want to book?</p>
             <div className="modal-buttons">
+              <button className="modal-cancel" onClick={handleModalClose}>
+                Cancel
+              </button>
               <button className="modal-confirm" onClick={handleConfirmBooking}>
                 Confirm
               </button>

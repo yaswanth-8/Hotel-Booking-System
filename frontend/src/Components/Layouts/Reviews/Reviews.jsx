@@ -13,30 +13,32 @@ const Reviews = () => {
   const auth = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5225/api/reviews/${hotelId}`
-        );
-        setReviews(response.data);
-        console.log(response.data);
-
-        // Send additional GET request for likes
-        if (auth !== "no-user") {
-          const userID = sessionStorage.getItem("UserID");
-          const likesResponse = await axios.get(
-            `http://localhost:5225/api/getlikes?userId=${userID}`
-          );
-          console.log(likesResponse.data);
-          setUserLikesData(likesResponse.data);
-        }
-        // Handle the likes data as needed
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hotelId, auth]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5225/api/reviews/${hotelId}`
+      );
+      setReviews(response.data);
+      console.log(response.data);
+
+      // Send additional GET request for likes
+      if (auth !== "no-user") {
+        const userID = sessionStorage.getItem("UserID");
+        const likesResponse = await axios.get(
+          `http://localhost:5225/api/getlikes?userId=${userID}`
+        );
+        console.log(likesResponse.data);
+        setUserLikesData(likesResponse.data);
+      }
+      // Handle the likes data as needed
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLike = (reviewID, isLiked) => {
     const userID = sessionStorage.getItem("UserID");
@@ -52,7 +54,7 @@ const Reviews = () => {
           .then((response) => {
             // Handle success response
             console.log("Like removed successfully:", response.data);
-            window.location.reload();
+            fetchData();
 
             // Perform any necessary updates or re-fetch data
           })
@@ -76,7 +78,7 @@ const Reviews = () => {
         .then((response) => {
           // Handle success response
           console.log("Like added successfully:", response.data);
-          window.location.reload();
+          fetchData();
 
           // Perform any necessary updates or re-fetch data
         })
@@ -93,7 +95,7 @@ const Reviews = () => {
       .delete(`http://localhost:5225/api/reviews/${reviewID}`)
       .then((response) => {
         console.log("Review deleted successfully:", response.data);
-        window.location.reload();
+        fetchData();
       })
       .catch((error) => {
         console.log("Error deleting review:", error);
@@ -167,7 +169,11 @@ const Reviews = () => {
       </div>
 
       {auth !== "no-user" ? (
-        <AddReview setReviews={setReviews} reviews={reviews} />
+        <AddReview
+          setReviews={setReviews}
+          reviews={reviews}
+          fetchData={fetchData}
+        />
       ) : (
         ""
       )}

@@ -78,7 +78,7 @@ function App() {
           />
           <Route
             path="/profile"
-            element={<UserPrivateRoute element={<Profile />} />}
+            element={<AdminAndUserPrivateRoute element={<Profile />} />}
           />
         </Routes>
       </div>
