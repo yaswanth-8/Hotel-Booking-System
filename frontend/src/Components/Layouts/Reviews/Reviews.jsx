@@ -162,7 +162,7 @@ const Reviews = () => {
             </div>
           ))
         ) : (
-          <div className="no-reviews-message">No reviews present 😕</div>
+          <div className="empty-message">No reviews present 😕</div>
         )}
       </div>
 

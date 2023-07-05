@@ -34,6 +34,12 @@
   border-radius: 4px;
   cursor: pointer;
 }
+.empty-message {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #555;
+}
 
 .component-spacing {
   padding-top: 100px;

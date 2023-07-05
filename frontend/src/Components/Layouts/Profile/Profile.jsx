@@ -58,6 +58,22 @@ const Profile = () => {
         <h2 className="profile-name">{username}</h2>
         <p className="profile-email">{email}</p>
       </div>
+      <hr />
+      {hotels ? (
+        <div className="empty-message">
+          No Bookings
+          <button
+            className="profile-blue-button"
+            onClick={() => {
+              navigate(`/hotels`);
+            }}
+          >
+            Check Hotels
+          </button>
+        </div>
+      ) : (
+        ""
+      )}
       {hotels.map((hotel) => (
         <div className="profile-hotel-card" key={hotel.hotel.hotelID}>
           <div className="profile-hotel-image-container">
@@ -116,6 +132,7 @@ const Profile = () => {
           </div>
         </div>
       </Modal>
+
       <button
         className="profile-blue-button"
         onClick={() => {
