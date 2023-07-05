@@ -1,58 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Reviews.css";
+import { useSelector } from "react-redux";
+import AddReview from "./AddReview/AddReview";
+import axios from "axios";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      reviewer: "John Doe",
-      date: "June 1, 2023",
-      content: "Great hotel with excellent service!",
-      likes: 0,
-    },
-    // Add more dummy reviews here
-  ]);
+  const [reviews, setReviews] = useState([]);
+  const hotelId = sessionStorage.getItem("HotelID");
+  console.log(hotelId + " is hotelID for reviews");
 
-  const [newReview, setNewReview] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5225/api/reviews/${hotelId}`
+        );
+        setReviews(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [hotelId]);
 
-  const handleInputChange = (event) => {
-    setNewReview(event.target.value);
-  };
-
-  const handleReviewSubmit = (event) => {
-    event.preventDefault();
-
-    if (newReview.trim() !== "") {
-      const newReviewObj = {
-        id: reviews.length + 1,
-        reviewer: "New Reviewer",
-        date: new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        content: newReview,
-        likes: 0,
-      };
-
-      setReviews([...reviews, newReviewObj]);
-      setNewReview("");
-
-      console.log("New Review:", newReviewObj);
-    }
-  };
+  const auth = useSelector((state) => state.auth.user);
 
   const handleLike = (id) => {
-    setReviews((prevReviews) =>
-      prevReviews.map((review) =>
-        review.id === id
-          ? {
-              ...review,
-              likes: review.likes === 1 ? 0 : 1,
-            }
-          : review
-      )
-    );
+    // setReviews((prevReviews) =>
+    //   prevReviews.map((review) =>
+    //     review.id === id
+    //       ? {
+    //           ...review,
+    //           likes: review.likes === 1 ? 0 : 1,
+    //         }
+    //       : review
+    //   )
+    // );
   };
 
   return (
@@ -62,41 +48,47 @@ const Reviews = () => {
 
       <div className="reviews-list">
         {reviews.map((review) => (
-          <div className="review" key={review.id}>
+          <div className="review" key={review.reviewID}>
             <div className="review-header">
-              <span className="reviewer">{review.reviewer}</span>
-              <span className="date">{review.date}</span>
+              <span className="reviewer">{review.user.name}</span>
+              <span className="date">
+                {new Date(review.reviewDate).toLocaleDateString("en-GB")}
+                {sessionStorage.getItem("userEmail") === review.user.email ? (
+                  <span>
+                    {" "}
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      style={{ color: "#ff0000" }}
+                    />
+                  </span>
+                ) : (
+                  ""
+                )}
+              </span>
             </div>
             <div className="content">{review.content}</div>
-            <div className="review-actions">
-              <button
-                className={`like-button ${review.likes === 1 ? "liked" : ""}`}
-                onClick={() => handleLike(review.id)}
-              >
-                Like ({review.likes})
-              </button>
-            </div>
+            {auth !== "no-user" ? (
+              <div className="review-actions">
+                <button
+                  className={`like-button ${review.likes === 1 ? "liked" : ""}`}
+                  onClick={() => handleLike(review.id)}
+                >
+                  Like ({review.likes})
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
             <hr className="review-divider" />
           </div>
         ))}
       </div>
-
-      <div className="new-review-container">
-        <div className="new-review-box">
-          <h3 className="new-review-heading">Write a Review</h3>
-          <form onSubmit={handleReviewSubmit}>
-            <textarea
-              className="review-input"
-              placeholder="Write your review here"
-              value={newReview}
-              onChange={handleInputChange}
-            />
-            <button type="submit" className="submit-button">
-              Submit Review
-            </button>
-          </form>
-        </div>
-      </div>
+      {auth !== "no-user" ? (
+        <AddReview setReviews={setReviews} reviews={reviews} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

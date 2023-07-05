@@ -25,7 +25,7 @@ function HotelDetails() {
   const auth = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const [showFullText, setShowFullText] = useState(false);
-
+  sessionStorage.setItem("HotelID", id);
   const handleShowMore = () => {
     setShowFullText(true);
   };
