@@ -4,7 +4,6 @@ import axios from "axios";
 const AddReview = () => {
   const [newReview, setNewReview] = useState("");
   const hotelId = sessionStorage.getItem("HotelID");
-  console.log(hotelId + " is hotelID for reviews");
 
   const handleInputChange = (event) => {
     setNewReview(event.target.value);

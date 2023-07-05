@@ -1,7 +1,7 @@
 .reviews-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px 20px 20px 20px;
 }
 
 .reviews-title {
@@ -48,7 +48,7 @@
 }
 
 .like-button {
-  background-color: #007bff;
+  background-color: #00415a;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -56,7 +56,7 @@
 }
 
 .like-button.liked {
-  background-color: #ff0000;
+  background-color: #00ff2a;
 }
 
 .like-button:disabled {
@@ -95,9 +95,16 @@
 }
 
 .submit-button {
-  background-color: #007bff;
+  background-color: #00415a;
   color: #fff;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
+}
+
+.no-reviews-message {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #555;
 }
