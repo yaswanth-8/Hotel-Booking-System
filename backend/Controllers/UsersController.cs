@@ -108,15 +108,26 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-          if (_context.User == null)
-          {
-              return Problem("Entity set 'backendContext.User'  is null.");
-          }
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
+            if (_context.User == null)
+            {
+                return Problem("Entity set 'backendContext.User' is null.");
+            }
 
-            return CreatedAtAction("GetUser", new { id = user.UserID }, user);
+            var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Email", "Email already exists.");
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                _context.User.Add(user);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetUser", new { id = user.UserID }, user);
+            }
+           
         }
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
