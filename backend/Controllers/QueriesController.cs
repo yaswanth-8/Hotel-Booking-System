@@ -32,6 +32,14 @@ namespace backend.Controllers
             return await _context.Query.Include(x => x.User).ToListAsync();
         }
 
+        [HttpGet]
+        [Route("/api/pending")]
+        public async Task<int> GetPendingCount()
+        {
+            int count = await _context.Query.CountAsync(x => x.Status == "pending");
+            return count;
+        }
+
         // GET: api/Queries/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Query>> GetQuery(int id)
