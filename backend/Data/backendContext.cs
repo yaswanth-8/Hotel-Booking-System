@@ -23,5 +23,7 @@ namespace backend.Data
         public DbSet<backend.Models.Review>? Review { get; set; }
 
         public DbSet<backend.Models.Like>? Like { get; set; }
+
+        public DbSet<backend.Models.Query>? Query { get; set; }
     }
 }
