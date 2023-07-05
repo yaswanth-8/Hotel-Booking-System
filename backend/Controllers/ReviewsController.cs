@@ -108,17 +108,20 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
-            if (_context.Review == null)
-            {
-                return NotFound();
-            }
             var review = await _context.Review.FindAsync(id);
+
             if (review == null)
             {
                 return NotFound();
             }
 
+            // Remove associated likes
+            var likesToRemove = await _context.Like.Where(l => l.Review.ReviewID == id).ToListAsync();
+            _context.Like.RemoveRange(likesToRemove);
+
+            // Delete the review
             _context.Review.Remove(review);
+
             await _context.SaveChangesAsync();
 
             return NoContent();
