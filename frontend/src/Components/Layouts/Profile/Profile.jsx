@@ -8,7 +8,9 @@ const Profile = () => {
   const [hotels, setHotels] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
   const [selectedHotelID, setSelectedHotelID] = useState(null);
+  const [editedHotel, setEditedHotel] = useState("");
   const [selectedBooking, setselectedBooking] = useState({
     bookingID: "0",
     user: {
@@ -28,39 +30,46 @@ const Profile = () => {
   const email = sessionStorage.getItem("userEmail");
   const auth = sessionStorage.getItem("auth-user");
   const navigate = useNavigate();
+  const today = new Date().toLocaleDateString("en-GB");
+  console.log(today);
 
   useEffect(() => {
-    const fetchHotels = async () => {
-      if (auth !== "admin") {
-        try {
-          const id = sessionStorage.getItem("UserID");
-          const response = await axios.get(
-            `http://localhost:5225/api/profile?id=${id}`
-          );
-          setHotels(response.data);
-          console.log(response.data);
-        } catch (error) {
-          console.error("Error fetching hotels:", error);
-        }
-      } else {
-        try {
-          const response = await axios.get(
-            `http://localhost:5225/api/bookings`
-          );
-          setHotels(response.data);
-          console.log(response.data);
-        } catch (error) {
-          console.error("Error fetching hotels:", error);
-        }
-      }
-    };
-
     fetchHotels();
+    // eslint-disable-next-line
   }, [auth]);
+
+  const fetchHotels = async () => {
+    if (auth !== "admin") {
+      try {
+        const id = sessionStorage.getItem("UserID");
+        const response = await axios.get(
+          `http://localhost:5225/api/profile?id=${id}`
+        );
+        setHotels(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    } else {
+      try {
+        const response = await axios.get(`http://localhost:5225/api/bookings`);
+        setHotels(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    }
+  };
 
   const handleCancel = (hotelId) => {
     setSelectedHotelID(hotelId);
     setIsModalOpen(true);
+  };
+
+  const handleCheckOut = (hotelId, hotel) => {
+    setEditedHotel(hotel);
+    setSelectedHotelID(hotelId);
+    setIsCheckOutModalOpen(true);
   };
 
   const handleViewDetails = (hotel) => {
@@ -84,6 +93,34 @@ const Profile = () => {
         // Handle error
         console.error("Error cancelling booking:", error);
       });
+  };
+
+  const handleCheckOutConfirmation = (selectedRating) => {
+    const prevRating = editedHotel.rating;
+    const userCount = editedHotel.ratedUserCount;
+    const newCOunt = userCount + 1;
+    const prev = editedHotel;
+    const newHotel = {
+      ...prev,
+      rating: (selectedRating + prevRating * userCount) / newCOunt,
+      ratedUserCount: newCOunt,
+    };
+
+    axios
+      .put(`http://localhost:5225/api/hotels/${editedHotel.hotelID}`, newHotel)
+      .then((response) => {
+        console.log("PUT request successful");
+        window.location.reload();
+        setEditedHotel(newHotel);
+      })
+      .catch((error) => {
+        console.error("Error in PUT request:", error);
+        // Handle the error or display an error message
+      });
+
+    fetchHotels();
+    //handleCancelConfirmation();
+    console.log("Rating selected:", selectedRating);
   };
 
   return (
@@ -138,12 +175,22 @@ const Profile = () => {
             </div>
             {auth !== "admin" ? (
               <div className="profile-bookings-button-group">
-                <button
-                  className="profile-cancel-button"
-                  onClick={() => handleCancel(hotel.bookingID)}
-                >
-                  Cancel
-                </button>
+                {new Date(hotel.checkInDate).toLocaleDateString("en-GB") <
+                today ? (
+                  <button
+                    className="profile-cancel-button"
+                    onClick={() => handleCheckOut(hotel.bookingID, hotel.hotel)}
+                  >
+                    Checkout
+                  </button>
+                ) : (
+                  <button
+                    className="profile-cancel-button"
+                    onClick={() => handleCancel(hotel.bookingID)}
+                  >
+                    Cancel
+                  </button>
+                )}
               </div>
             ) : (
               <div className="profile-bookings-button-group">
@@ -173,6 +220,34 @@ const Profile = () => {
               onClick={handleCancelConfirmation}
             >
               Yes
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isCheckOutModalOpen}
+        onClose={() => setIsCheckOutModalOpen(false)}
+      >
+        <div className="modal-content">
+          <h3>Thanks for visiting! Please rate your experience:</h3>
+          <div className="rating-container">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className="fillColor"
+                onClick={() => handleCheckOutConfirmation(star)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+          <div className="modal-buttons">
+            <button
+              className="modal-cancel"
+              onClick={() => setIsCheckOutModalOpen(false)}
+            >
+              Cancel
             </button>
           </div>
         </div>
