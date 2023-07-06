@@ -36,6 +36,7 @@ namespace backend.Controllers
         [Route("/api/pending")]
         public async Task<int> GetPendingCount()
         {
+            Console.WriteLine("In pending....");
             int count = await _context.Query.CountAsync(x => x.Status == "pending");
             return count;
         }

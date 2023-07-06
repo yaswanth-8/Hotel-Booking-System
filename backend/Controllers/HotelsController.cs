@@ -86,6 +86,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
+            hotel.RatedUserCount = 1;
           if (_context.Hotel == null)
           {
               return Problem("Entity set 'backendContext.Hotel'  is null.");
