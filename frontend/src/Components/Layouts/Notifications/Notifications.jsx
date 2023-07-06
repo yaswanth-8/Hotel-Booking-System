@@ -73,6 +73,7 @@ const Notifications = () => {
     } catch (error) {
       console.error("Error updating notification status:", error);
     }
+    dispatch(decrementNotificationCount());
     fetchNotifications();
   };
 
@@ -250,36 +251,48 @@ const Notifications = () => {
 
       <Modal isOpen={showDenyModal} onClose={closeModal}>
         <p>😮 Do you want to deny it?</p>
-        <button
-          className="modal-cancel"
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          Cancel
-        </button>
-        <button
-          className="modal-confirm"
-          onClick={() => {
-            handleDeny(selectedNotification);
-            closeModal();
-          }}
-        >
-          OK
-        </button>
+        <div className="modal-buttons">
+          <button
+            className="modal-cancel"
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className="modal-confirm"
+            onClick={() => {
+              handleDeny(selectedNotification);
+              closeModal();
+            }}
+          >
+            OK
+          </button>
+        </div>
       </Modal>
 
       <Modal isOpen={showResolveModal} onClose={closeModal}>
         <p>Do you want to resolve it?</p>
-        <button
-          className="modal-ok-button"
-          onClick={() => {
-            handleResolve(selectedNotification);
-            closeModal();
-          }}
-        >
-          OK
-        </button>
+        <div className="modal-buttons">
+          <button
+            className="modal-cancel"
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className="modal-confirm"
+            onClick={() => {
+              handleResolve(selectedNotification);
+              closeModal();
+            }}
+          >
+            OK
+          </button>
+        </div>
       </Modal>
     </div>
   );

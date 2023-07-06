@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setPriceFilter,
+  setRatingFilter,
+} from "../../../../store/Filter/filterSlice";
 
 function Filter({ filterList, heading, onFilterChange }) {
   const [selectedValue, setSelectedValue] = useState(null);
-
+  const dispatch = useDispatch();
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
     const isChecked = event.target.checked;
@@ -10,6 +15,12 @@ function Filter({ filterList, heading, onFilterChange }) {
     if (isChecked) {
       setSelectedValue(value);
       onFilterChange([value, heading]);
+      if (heading === "Price Range") {
+        dispatch(setPriceFilter(value));
+      }
+      if (heading === "Ratings") {
+        dispatch(setRatingFilter(value));
+      }
     } else {
       setSelectedValue(null);
       onFilterChange(null);
