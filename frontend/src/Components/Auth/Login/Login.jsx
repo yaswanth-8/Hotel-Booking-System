@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
+import bcrypt from "bcryptjs";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -39,26 +40,43 @@ function Login() {
         }));
       }, 1000);
     } else if (!updatedFormData.password) {
-      console.log(inputValue);
-      console.log("valid");
       updatedFormData.password = inputValue;
       try {
         const response = await axios.get(
-          `http://localhost:5225/api/userInfo?email=${formData.email}&password=${inputValue}`
+          `http://localhost:5225/api/userInfo?email=${formData.email}`
         );
         console.log(response.data);
-        if (response.data.role === "admin") {
-          dispatch(admin());
+        const storedHashedPassword = response.data.password;
+        console.log(storedHashedPassword[0]);
+        var passwordMatched = false;
+        if (storedHashedPassword[0] !== "$") {
+          if (inputValue === response.data.password) {
+            passwordMatched = true;
+          }
         } else {
-          dispatch(signIn(response.data.name));
+          passwordMatched = await bcrypt.compare(
+            inputValue,
+            storedHashedPassword
+          );
         }
-        console.log("In loginjs role is" + response.data.role);
-        sessionStorage.setItem("auth-user", response.data.role);
-        sessionStorage.setItem("userName", response.data.name);
-        sessionStorage.setItem("userEmail", response.data.email);
-        sessionStorage.setItem("UserID", response.data.userID);
-        sessionStorage.setItem("isLoggedIn", true);
-        navigate("/hotels");
+        if (passwordMatched) {
+          if (response.data.role === "admin") {
+            dispatch(admin());
+          } else {
+            dispatch(signIn(response.data.name));
+          }
+          console.log("In loginjs role is" + response.data.role);
+          sessionStorage.setItem("auth-user", response.data.role);
+          sessionStorage.setItem("userName", response.data.name);
+          sessionStorage.setItem("userEmail", response.data.email);
+          sessionStorage.setItem("UserID", response.data.userID);
+          sessionStorage.setItem("isLoggedIn", true);
+          navigate("/hotels");
+        } else {
+          console.log("invalid");
+          updatedFormData.password = "Invalid credentials ";
+          updatedFormData.passwordFieldPosition = "left";
+        }
       } catch (error) {
         console.log("invalid");
         updatedFormData.password = "Invalid credentials ";

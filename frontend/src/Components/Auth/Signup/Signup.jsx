@@ -6,6 +6,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import usePostUser from "../../../Hooks/usePostUser";
+import bcrypt from "bcryptjs";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ function SignUp() {
   const sendRef = useRef();
   const { postUser, isLoading, error } = usePostUser();
 
-  const sendHandler = () => {
+  const sendHandler = async () => {
     const inputValue = sendRef.current.value;
     if (inputValue === "") {
       return;
@@ -68,8 +69,12 @@ function SignUp() {
         updatedFormData.retypePassword = "Password didnt match";
         updatedFormData.passwordFieldPosition = "left";
       } else {
+        const saltRounds = 10; // Number of salt rounds for bcrypt
+        const hashedPassword = await bcrypt.hash(inputValue, saltRounds);
+
         updatedFormData.retypePassword = inputValue;
-        postUser(formData.userName, formData.email, formData.password, "user");
+        console.log(hashedPassword);
+        postUser(formData.userName, formData.email, hashedPassword, "user");
         console.log(isLoading);
         if (error) {
           console.log(error);
@@ -120,15 +125,21 @@ function SignUp() {
         <div className="left">Retype your Password</div>
       )}
 
-      {formData.retypePassword && (
+      {formData.retypePassword === "Password didnt match" ? (
         <div className={formData.passwordFieldPosition}>
-          {String.fromCharCode(8226).repeat(formData.retypePassword.length)}
-          <FontAwesomeIcon
-            icon={faCircleCheck}
-            style={{ color: "#00d60e" }}
-            size="lg"
-          />
+          {formData.retypePassword}
         </div>
+      ) : (
+        formData.retypePassword && (
+          <div className={formData.passwordFieldPosition}>
+            {String.fromCharCode(8226).repeat(formData.retypePassword.length)}
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              style={{ color: "#00d60e" }}
+              size="lg"
+            />
+          </div>
+        )
       )}
 
       <div className="input-wrapper">
