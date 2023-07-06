@@ -12,6 +12,7 @@ namespace backend.Models
         public string? Country { get; set; }
         public string? FoodStyle { get; set; }
         public int? Rating { get; set; }
+        public int? RatedUserCount { get; set; }
         public string? Url1 { get; set; }
         public string? Url2 { get; set; }
         public string? Url3 { get; set; }
