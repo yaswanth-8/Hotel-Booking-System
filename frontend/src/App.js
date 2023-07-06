@@ -50,7 +50,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div className="background-wrapper">
         <Navbar
           className="Navbar-display-container"
           title="Presidio Bookings"

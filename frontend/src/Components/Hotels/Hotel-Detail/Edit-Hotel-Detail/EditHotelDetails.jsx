@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const EditHotelDetails = ({ hotel }) => {
+const EditHotelDetails = ({ hotel, fetchHotelData }) => {
   const [editedHotel, setEditedHotel] = useState(hotel);
 
   const handleEdit = () => {
@@ -14,7 +14,7 @@ const EditHotelDetails = ({ hotel }) => {
       )
       .then((response) => {
         console.log("PUT request successful");
-        window.location.reload();
+        fetchHotelData = { fetchHotelData };
       })
       .catch((error) => {
         console.error("Error in PUT request:", error);

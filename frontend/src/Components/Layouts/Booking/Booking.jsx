@@ -18,27 +18,27 @@ const Booking = ({ hotel }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    calculateTotalPrice();
-  }, [checkInDate, checkOutDate, numAdults, numChildren]);
-
-  const calculateTotalPrice = () => {
     if (checkInDate && checkOutDate) {
       const numberOfDays = Math.ceil(
         (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
       );
-      console.log("days " + numberOfDays);
       const basePrice =
         hotel.pricePerNight * numberOfDays +
         numAdults * 2000 +
         numChildren * 1000;
-      console.log("baseprice " + basePrice);
       const discountedPrice =
         Math.round((basePrice - (basePrice * hotel.offer) / 100) / 10) * 10;
 
-      console.log("discountedprice " + discountedPrice);
       setTotalPrice(discountedPrice);
     }
-  };
+  }, [
+    checkInDate,
+    checkOutDate,
+    numAdults,
+    numChildren,
+    hotel.offer,
+    hotel.pricePerNight,
+  ]);
 
   const handleBook = () => {
     setIsModalOpen(true); // Open the modal
@@ -69,6 +69,15 @@ const Booking = ({ hotel }) => {
       price: totalPrice,
     };
 
+    const bookingNotification = {
+      user: {
+        userID: sessionStorage.getItem("UserID"),
+      },
+      subject: hotel.name,
+      content: "Booking done Successfully",
+      status: "booking",
+    };
+
     axios
       .post("http://localhost:5225/api/bookings", bookingData)
       .then((response) => {
@@ -76,6 +85,16 @@ const Booking = ({ hotel }) => {
       })
       .catch((error) => {
         console.error("Error creating booking:", error);
+      });
+
+    axios
+      .post("http://localhost:5225/api/queries", bookingNotification)
+      .then((response) => {
+        console.log("Query submitted successfully:", response.data);
+        navigate("/profile");
+      })
+      .catch((error) => {
+        console.log("Error submitting query:", error);
       });
   };
 

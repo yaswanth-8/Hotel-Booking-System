@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./HotelDetail.css";
 import Booking from "../../Layouts/Booking/Booking";
@@ -8,9 +8,10 @@ import useGetWeather from "../../../Hooks/useGetWeather";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Static from "../../Layouts/Static/Static";
-import useGetHotel from "../../../Hooks/useGetHotel";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import Loading from "../../Layouts/Loading/Loading";
 
 function WeatherWrapper({ location }) {
   const weather = useGetWeather(location);
@@ -20,7 +21,24 @@ function WeatherWrapper({ location }) {
 
 function HotelDetails() {
   const { id } = useParams();
-  const { hotel, loading, error } = useGetHotel(id);
+  const [hotel, setHotel] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchHotelData();
+    setIsLoading(false);
+    // eslint-disable-next-line
+  }, []);
+  const fetchHotelData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5225/api/hotels/${id}`
+      );
+      setHotel(response.data);
+    } catch (error) {
+      console.log("Error");
+    }
+  };
 
   const auth = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
@@ -34,112 +52,121 @@ function HotelDetails() {
     setShowFullText(false);
   };
 
-  if (loading || !hotel) {
-    return <div>Loading...</div>; // Render a loading state while the hotel data is being fetched
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>; // Render an error message if there's an error fetching the hotel data
-  }
-
   const showReviewsHandler = () => {
     navigate(`/hotels/${hotel.hotelID}/reviews`);
   };
 
   return (
-    <div className="hotel-details-details">
-      <div className="hotel-details-data">
-        <h2 className="hotel-details-name">{hotel.name}</h2>
-        <div className="image-grid">
-          <Carousel showThumbs={false}>
-            <img src={hotel.url1} alt={hotel.name} />
-            <img src={hotel.url2} alt={hotel.name} />
-            <img src={hotel.url3} alt={hotel.name} />
-            <img src={hotel.url4} alt={hotel.name} />
-            <img src={hotel.url5} alt={hotel.name} />
-          </Carousel>
-        </div>
-        <hr />
-        <div className="hotelDetails">
+    hotel &&
+    (isLoading ? (
+      <Loading></Loading>
+    ) : (
+      <div className="hotel-details-details">
+        <div className="hotel-details-data">
+          <h2 className="hotel-details-name">
+            {hotel.name}{" "}
+            {hotel.site === "Ocean View" || hotel.site === "Beach View"
+              ? "🌊"
+              : "🌴"}
+          </h2>
+          <div className="image-grid">
+            <Carousel showThumbs={false}>
+              <img src={hotel.url1} alt={hotel.name} />
+              <img src={hotel.url2} alt={hotel.name} />
+              <img src={hotel.url3} alt={hotel.name} />
+              <img src={hotel.url4} alt={hotel.name} />
+              <img src={hotel.url5} alt={hotel.name} />
+            </Carousel>
+          </div>
           <hr />
+          <div className="hotelDetails">
+            <hr />
 
-          {hotel.about.length > 210 ? (
-            <p className="hotel-details-about">
-              {showFullText ? (
-                hotel.about
-              ) : (
-                <>
-                  {hotel.about.slice(0, 200)}
-                  {hotel.about.length > 200 && "..."}
-                </>
-              )}
-              {!showFullText && hotel.about.length > 200 && (
-                <button className="small-blue-button" onClick={handleShowMore}>
-                  <FontAwesomeIcon icon={faChevronDown} />
-                </button>
-              )}
-              {showFullText && (
-                <button className="small-blue-button" onClick={handleShowLess}>
-                  <FontAwesomeIcon icon={faChevronUp} />
-                </button>
-              )}
-            </p>
-          ) : (
-            <p className="hotel-details-about">{hotel.about}</p>
-          )}
+            {hotel.about.length > 210 ? (
+              <p className="hotel-details-about">
+                {showFullText ? (
+                  hotel.about
+                ) : (
+                  <>
+                    {hotel.about.slice(0, 200)}
+                    {hotel.about.length > 200 && "..."}
+                  </>
+                )}
+                {!showFullText && hotel.about.length > 200 && (
+                  <button
+                    className="small-blue-button"
+                    onClick={handleShowMore}
+                  >
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </button>
+                )}
+                {showFullText && (
+                  <button
+                    className="small-blue-button"
+                    onClick={handleShowLess}
+                  >
+                    <FontAwesomeIcon icon={faChevronUp} />
+                  </button>
+                )}
+              </p>
+            ) : (
+              <p className="hotel-details-about">{hotel.about}</p>
+            )}
 
-          <hr />
-          <p>
-            <strong>Address:</strong> {hotel.address}
-          </p>
-          <p>
-            <strong>Location:</strong> {hotel.location}
-          </p>
-          <p>
-            <strong>Country:</strong> {hotel.country}
-          </p>
-          {hotel.location ? (
+            <hr />
             <p>
-              <strong>Current Weather:</strong>
-              <WeatherWrapper location={hotel.location} />
+              <strong>Address:</strong> {hotel.address} 🌍
             </p>
-          ) : (
-            ""
-          )}
-          <p>
-            <strong>Rating:</strong> {hotel.rating}
-          </p>
-          <p>
-            <strong>Description:</strong> {hotel.description}
-          </p>
-          <p>
-            <strong>Price Per Night:</strong> {hotel.pricePerNight}
-          </p>
-          <p>
-            <strong>Offer:</strong> {hotel.offer}% off
-          </p>
-          <p>
-            <strong>Site:</strong> {hotel.site}
-          </p>
+            <p>
+              <strong>Location:</strong> {hotel.location}
+            </p>
+            <p>
+              <strong>Country:</strong> {hotel.country} 📍
+            </p>
+            {hotel.location ? (
+              <p>
+                <strong>Current Weather:</strong>
+                <WeatherWrapper location={hotel.location} />
+              </p>
+            ) : (
+              ""
+            )}
+            <p>
+              <strong>Rating:</strong> {hotel.rating} ⭐ ({hotel.ratedUserCount}
+              )
+            </p>
+            <p>
+              <strong>Description:</strong> {hotel.description}
+            </p>
+            <p>
+              <strong>Price Per Night:</strong> ₹ {hotel.pricePerNight}
+            </p>
+            <p>
+              <strong>Offer:</strong> {hotel.offer}% off
+            </p>
+            <p>
+              <strong>Site:</strong> {hotel.site}
+            </p>
+            <hr />
+            <Static site={hotel.site} />
+          </div>
+          <div className="details-page-button">
+            <button className="blue-button" onClick={showReviewsHandler}>
+              Reviews
+            </button>
+          </div>
           <hr />
-          <Static site={hotel.site} />
         </div>
-        <div className="details-page-button">
-          <button className="blue-button" onClick={showReviewsHandler}>
-            Reviews
-          </button>
-        </div>
-        <hr />
-      </div>
 
-      <div className="hotel-details-booking">
-        {auth === "admin" ? (
-          <EditHotelDetails hotel={hotel} />
-        ) : (
-          <Booking hotel={hotel} />
-        )}
+        <div className="hotel-details-booking">
+          {auth === "admin" ? (
+            <EditHotelDetails hotel={hotel} fetchHotelData={fetchHotelData} />
+          ) : (
+            <Booking hotel={hotel} fetchHotelData={fetchHotelData} />
+          )}
+        </div>
       </div>
-    </div>
+    ))
   );
 }
 

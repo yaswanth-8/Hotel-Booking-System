@@ -11,7 +11,7 @@ const HotelCard = ({ Hotel }) => {
           <span className="star-rating">{Hotel.rating} ⭐</span>
         </div>
         <p className="hotel-description">{Hotel.description}</p>
-        <p className="hotel-description">₹ {Hotel.pricePerNight} / night</p>
+        <p className="hotel-price">₹ {Hotel.pricePerNight} / night</p>
       </div>
     </div>
   );

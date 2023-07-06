@@ -29,10 +29,8 @@ const Profile = () => {
   const username = sessionStorage.getItem("userName");
   const email = sessionStorage.getItem("userEmail");
   const auth = sessionStorage.getItem("auth-user");
+  var key = 0;
   const navigate = useNavigate();
-  const today = new Date().toLocaleDateString("en-GB");
-  console.log(today);
-
   useEffect(() => {
     fetchHotels();
     // eslint-disable-next-line
@@ -87,7 +85,7 @@ const Profile = () => {
       .then((response) => {
         // Handle successful response
         console.log("Booking cancelled successfully:", response.data);
-        window.location.reload();
+        fetchHotels();
       })
       .catch((error) => {
         // Handle error
@@ -98,29 +96,35 @@ const Profile = () => {
   const handleCheckOutConfirmation = (selectedRating) => {
     const prevRating = editedHotel.rating;
     const userCount = editedHotel.ratedUserCount;
-    const newCOunt = userCount + 1;
+    const newCount = userCount + 1;
     const prev = editedHotel;
     const newHotel = {
       ...prev,
-      rating: (selectedRating + prevRating * userCount) / newCOunt,
-      ratedUserCount: newCOunt,
+      rating: Math.round((selectedRating + prevRating * userCount) / newCount),
+      ratedUserCount: newCount,
     };
-
+    console.log(editedHotel);
+    console.log(newHotel);
     axios
       .put(`http://localhost:5225/api/hotels/${editedHotel.hotelID}`, newHotel)
       .then((response) => {
         console.log("PUT request successful");
-        window.location.reload();
+
         setEditedHotel(newHotel);
       })
       .catch((error) => {
-        console.error("Error in PUT request:", error);
+        console.error("Error in PUT request of profile section:", error);
         // Handle the error or display an error message
       });
 
-    fetchHotels();
-    //handleCancelConfirmation();
+    handleCancelConfirmation();
+    setIsCheckOutModalOpen(false);
     console.log("Rating selected:", selectedRating);
+  };
+
+  const openHotel = (id) => {
+    console.log("hotel id from profile to hotels " + id);
+    navigate(`/hotels/${id}`);
   };
 
   return (
@@ -146,11 +150,12 @@ const Profile = () => {
         ""
       )}
       {hotels.map((hotel) => (
-        <div className="profile-hotel-card" key={hotel.hotel.hotelID}>
+        <div className="profile-hotel-card" key={key++}>
           <div className="profile-hotel-image-container">
             <img
               className="profile-hotel-image"
               src={hotel.hotel.url1}
+              onClick={() => openHotel(hotel.hotel.hotelID)}
               alt="Hotel"
             />
           </div>
@@ -175,8 +180,7 @@ const Profile = () => {
             </div>
             {auth !== "admin" ? (
               <div className="profile-bookings-button-group">
-                {new Date(hotel.checkInDate).toLocaleDateString("en-GB") <
-                today ? (
+                {new Date(hotel.checkInDate) <= new Date() ? (
                   <button
                     className="profile-cancel-button"
                     onClick={() => handleCheckOut(hotel.bookingID, hotel.hotel)}
@@ -235,10 +239,10 @@ const Profile = () => {
             {[1, 2, 3, 4, 5].map((star) => (
               <span
                 key={star}
-                className="fillColor"
+                className="growIt"
                 onClick={() => handleCheckOutConfirmation(star)}
               >
-                ★
+                &nbsp;⭐&nbsp;
               </span>
             ))}
           </div>

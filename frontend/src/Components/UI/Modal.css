@@ -14,6 +14,7 @@
 
 .modal-content {
   background-color: #fff;
+  text-align: center;
   padding: 20px;
   border-radius: 5px;
   max-width: 400px;
@@ -66,7 +67,7 @@
 }
 
 .modal-confirm {
-  background-color: #007bff;
+  background-color: #00415a;
   color: #fff;
 }
 

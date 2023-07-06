@@ -60,6 +60,7 @@ const AddHotel = () => {
             <input
               type="text"
               name="name"
+              autoComplete="off"
               value={hotelDetails.name}
               onChange={handleInputChange}
             />
@@ -69,6 +70,7 @@ const AddHotel = () => {
             <input
               type="text"
               name="address"
+              autoComplete="off"
               value={hotelDetails.address}
               onChange={handleInputChange}
             />
@@ -78,6 +80,7 @@ const AddHotel = () => {
             <input
               type="text"
               name="location"
+              autoComplete="off"
               value={hotelDetails.location}
               onChange={handleInputChange}
             />
@@ -87,6 +90,7 @@ const AddHotel = () => {
             <input
               type="text"
               name="country"
+              autoComplete="off"
               value={hotelDetails.country}
               onChange={handleInputChange}
             />
@@ -96,6 +100,7 @@ const AddHotel = () => {
             <input
               type="text"
               name="foodStyle"
+              autoComplete="off"
               value={hotelDetails.foodStyle}
               onChange={handleInputChange}
             />
@@ -148,6 +153,7 @@ const AddHotel = () => {
             <input
               type="text"
               name="site"
+              autoComplete="off"
               value={hotelDetails.site}
               onChange={handleInputChange}
             />
@@ -182,13 +188,22 @@ const AddHotel = () => {
               placeholder={`Image URL ${index}`}
             />
           ))}
-          <button
-            type="button"
-            className="modal-ok-button"
-            onClick={handleImageUrlSubmit}
-          >
-            OK
-          </button>
+          <div className="modal-buttons">
+            <button
+              type="button"
+              className="modal-cancel"
+              onClick={() => setIsOpen(false)}
+            >
+              cancel
+            </button>
+            <button
+              type="button"
+              className="modal-confirm"
+              onClick={handleImageUrlSubmit}
+            >
+              OK
+            </button>
+          </div>
         </div>
       </Modal>
     </div>

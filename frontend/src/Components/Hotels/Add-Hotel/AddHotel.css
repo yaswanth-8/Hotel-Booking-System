@@ -5,6 +5,8 @@
   padding: 50px;
   box-sizing: border-box;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 .addHotel-field-container {
@@ -28,11 +30,12 @@
   box-sizing: border-box;
   font-size: 14px;
   margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .addHotel-button {
   padding: 10px 20px;
-  background-color: #4caf50;
+  background-color: #00415a;
   color: #fff;
   margin: 5px;
   border: none;
@@ -42,12 +45,13 @@
 }
 
 .addHotel-button:hover {
-  background-color: #45a049;
+  background-color: #00415a;
 }
 
 .add-hotel-container {
   justify-content: center;
   padding-top: 60px;
+  background-color: #f3f3f3;
 }
 
 .modal-content {

@@ -7,23 +7,23 @@ const useGetHotel = (id) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchHotelData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5225/api/hotels/${id}`
-        );
-        setHotel(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
     fetchHotelData();
+    // eslint-disable-next-line
   }, [id]);
+  const fetchHotelData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5225/api/hotels/${id}`
+      );
+      setHotel(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
 
-  return { hotel, loading, error };
+  return { hotel, loading, error, fetchHotelData };
 };
 
 export default useGetHotel;

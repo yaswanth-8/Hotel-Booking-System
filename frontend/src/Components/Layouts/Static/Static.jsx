@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCar,
   faDoorOpen,
+  faKitchenSet,
   faMountainSun,
-  faPaw,
   faPersonShelter,
   faPersonSwimming,
   faTv,
@@ -91,18 +91,18 @@ const Static = ({ site }) => {
             <li>
               <span className="static-icon">
                 <FontAwesomeIcon
-                  icon={faPaw}
+                  icon={faKitchenSet}
                   style={{ color: "#000000" }}
                   size="lg"
                 />
               </span>
-              Pets allowed
+              Kitchen
             </li>
             <li>
               <span className="static-icon">
                 <FontAwesomeIcon icon={faTv} style={{ color: "#000000" }} />
               </span>
-              18" HDTV with standard cable/satellite
+              HDTV with standard cable/satellite
             </li>
             <li>
               <span className="static-icon">

@@ -11,7 +11,9 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
+import { decrementNotificationCount } from "../../../store/Notification/notificationSlice";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -22,6 +24,7 @@ const Notifications = () => {
   const [myNotificationsCount, setMyNotificationsCount] = useState(null); // Initialize myNotificationsCount with 0
 
   const auth = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchNotifications();
@@ -100,6 +103,8 @@ const Notifications = () => {
     } catch (error) {
       console.error("Error resolving notification:", error);
     }
+
+    dispatch(decrementNotificationCount());
     fetchNotifications();
   };
 
@@ -131,7 +136,7 @@ const Notifications = () => {
     <div className="notifications">
       {notifications.map((notification) => (
         <div key={notification.queryID}>
-          {auth === "admin" ||
+          {(auth === "admin" && notification.status === "pending") ||
           notification.user.userID.toString().trim() ===
             sessionStorage.getItem("UserID").trim() ? (
             <div className="notification">
@@ -161,6 +166,17 @@ const Notifications = () => {
                     <FontAwesomeIcon
                       icon={faCircleCheck}
                       style={{ color: "#00d60e" }}
+                      size="lg"
+                    />
+                  </span>
+                ) : (
+                  ""
+                )}
+                {notification.status === "booking" ? (
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faCalendarCheck}
+                      style={{ color: "#020964" }}
                       size="lg"
                     />
                   </span>

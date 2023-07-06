@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { combineReducers } from "redux";
-import hotelReducer from "./Hotel-Slice/hotelSlice";
 import authReducer from "./Auth-Slice/authSlice";
+import notificationReducer from "./Notification/notificationSlice";
 
 // Combine multiple reducers into a single reducer
 const rootReducer = combineReducers({
-  hotel: hotelReducer,
+  notification: notificationReducer,
   auth: authReducer,
 });
 

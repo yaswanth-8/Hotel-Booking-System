@@ -2,7 +2,7 @@
 
 .profile-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 60%;
   margin: 0 auto;
   padding-top: 40px;
 }
@@ -27,7 +27,7 @@
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .profile-hotel-image-container {
@@ -41,6 +41,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .profile-hotel-details {
@@ -102,8 +103,29 @@
   background-color: #e60000;
 }
 
+.growIt {
+  font-size: xx-large;
+}
+
+.growIt:hover {
+  font-size: x-large;
+}
+
+.rating-container {
+  box-sizing: border-box;
+  margin: 20px;
+  cursor: pointer;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
+  .profile-container {
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+    padding-top: 40px;
+  }
+
   .profile-hotel-card {
     flex-direction: column;
     text-align: center;

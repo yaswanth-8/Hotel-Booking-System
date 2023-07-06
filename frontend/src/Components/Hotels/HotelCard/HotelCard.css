@@ -5,6 +5,10 @@
   cursor: pointer;
 }
 
+.hotel-card:hover {
+  transform: scale(1.01);
+}
+
 .hotel-image {
   width: 250px;
   height: 200px;
@@ -36,6 +40,12 @@
 }
 
 .hotel-description {
+  margin: 2px;
+  font-size: 14px;
+  color: rgb(106, 105, 105);
+}
+.hotel-price {
   margin: 0;
+  font-weight: 500;
   color: rgb(106, 105, 105);
 }

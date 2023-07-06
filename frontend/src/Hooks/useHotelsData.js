@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useHotelsData = () => {
+export const useHotelsData = (setIsLoading) => {
   const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
@@ -9,12 +9,14 @@ export const useHotelsData = () => {
         const response = await fetch("http://localhost:5225/api/hotels");
         const hotelData = await response.json();
         setHotels(hotelData);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching hotel data:", error);
       }
     };
 
     fetchHotels();
+    // eslint-disable-next-line
   }, []);
 
   return hotels;
