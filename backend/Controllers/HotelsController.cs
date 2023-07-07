@@ -32,6 +32,23 @@ namespace backend.Controllers
             return await _context.Hotel.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("/api/hotels/countries")]
+        public async Task<ActionResult<IEnumerable<string>>> GetCountries()
+        {
+            // Check if the Hotel table is empty
+            if (!_context.Hotel.Any())
+            {
+                return NotFound();
+            }
+
+            // Retrieve distinct countries from the Hotel table
+            var countries = await _context.Hotel.Select(h => h.Country).Distinct().ToListAsync();
+
+            // Return the list of countries as the result
+            return countries;
+        }
+
         // GET: api/Hotels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)

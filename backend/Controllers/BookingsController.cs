@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
+using backend.Classes;
 
 namespace backend.Controllers
 {
@@ -110,6 +111,11 @@ namespace backend.Controllers
             booking.Hotel= hotel;
             Console.WriteLine(booking.CheckInDate + " checkin");
             Console.WriteLine(booking.CheckOutDate + " checkout");
+            string mailSubject = "Thank You ✨ for Booking with Presidio Bookings!(Capstone Project)";
+
+            string mailContent = "Booking Confirmed: " + booking.Hotel.Name + ". Dear " + booking.User.Name + ", Thank you for choosing Presidio Bookings. Your booking at " + booking.Hotel.Name + " has been confirmed. Check-in 📆: " + ((DateTime)booking.CheckInDate).ToString("dd/MM/yyyy") + ". Check-out 📆: " + ((DateTime)booking.CheckOutDate).ToString("dd/MM/yyyy") + ". We look forward to providing you with a remarkable stay at " + booking.Hotel.Name + ". If you have any questions or special requests, please don't hesitate to contact us. Warm regards, The Presidio Bookings Team.";
+
+
 
             if (_context.Booking == null)
           {
@@ -117,6 +123,7 @@ namespace backend.Controllers
           }
             _context.Booking.Add(booking);
             await _context.SaveChangesAsync();
+            MailService.sendConfirmationEmail(mailSubject, mailContent, booking.User.Email);
 
             return CreatedAtAction("GetBooking", new { id = booking.BookingID }, booking);
         }
