@@ -5,6 +5,7 @@ export const filterSlice = createSlice({
   initialState: {
     rating: "",
     price: "",
+    country: "",
   },
   reducers: {
     setRatingFilter: (state, action) => {
@@ -13,14 +14,22 @@ export const filterSlice = createSlice({
     setPriceFilter: (state, action) => {
       state.price = action.payload;
     },
+    setCountryFilter: (state, action) => {
+      state.country = action.payload;
+    },
     clearFilter: (state) => {
       state.rating = "";
       state.price = "";
+      state.country = "";
     },
   },
 });
 
-export const { setRatingFilter, setPriceFilter, clearFilter } =
-  filterSlice.actions;
+export const {
+  setRatingFilter,
+  setPriceFilter,
+  clearFilter,
+  setCountryFilter,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

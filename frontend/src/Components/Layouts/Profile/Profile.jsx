@@ -134,7 +134,7 @@ const Profile = () => {
         <p className="profile-email">{email}</p>
       </div>
       <hr />
-      {!hotels ? (
+      {hotels.length === 0 ? (
         <div className="empty-message">
           No Bookings
           <button

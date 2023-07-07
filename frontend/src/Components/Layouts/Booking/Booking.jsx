@@ -91,7 +91,7 @@ const Booking = ({ hotel }) => {
       .post("http://localhost:5225/api/queries", bookingNotification)
       .then((response) => {
         console.log("Query submitted successfully:", response.data);
-        navigate("/profile");
+        navigate("/hotels");
       })
       .catch((error) => {
         console.log("Error submitting query:", error);
@@ -146,6 +146,7 @@ const Booking = ({ hotel }) => {
           className="form-control"
           value={numAdults}
           min="1"
+          max="12"
           onChange={(e) => setNumAdults(parseInt(e.target.value))}
         />
       </div>
@@ -154,6 +155,7 @@ const Booking = ({ hotel }) => {
         <input
           type="number"
           className="form-control"
+          max="10"
           value={numChildren}
           onChange={(e) => setNumChildren(parseInt(e.target.value))}
         />

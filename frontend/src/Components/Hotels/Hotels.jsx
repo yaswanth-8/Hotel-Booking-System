@@ -13,24 +13,41 @@ const Hotels = () => {
   const hotels = useHotelsData(setIsLoading);
   const price = useSelector((state) => state.filter.price);
   const rating = useSelector((state) => state.filter.rating);
+  const country = useSelector((state) => state.filter.country);
 
   useEffect(() => {
     let filteredHotels = hotels;
 
-    if (price) {
+    if (price !== null && price !== "") {
       filteredHotels = filteredHotels.filter((hotel) => {
-        return hotel.pricePerNight < price;
+        return hotel.pricePerNight <= price;
       });
     }
 
-    if (rating) {
+    if (rating !== null && rating !== "") {
       filteredHotels = filteredHotels.filter((hotel) => {
-        return hotel.rating < rating;
+        return hotel.rating >= rating;
       });
     }
+    console.log(price + " is price");
+    console.log(rating + " is rating");
+    console.log(country + " is country");
+
+    if (country) {
+      filteredHotels = filteredHotels.filter((hotel) => {
+        return hotel.country === country;
+      });
+    }
+
+    if (price === 1000000 && !rating && !country) {
+      console.log("All are empty");
+      filteredHotels = hotels;
+    }
+
+    console.log(filteredHotels.length);
 
     setFilteredHotels(filteredHotels);
-  }, [hotels, price, rating]);
+  }, [hotels, price, rating, country]);
 
   const handleHotelClick = (hotelId) => {
     navigate(`/hotels/${hotelId}`);
@@ -40,15 +57,21 @@ const Hotels = () => {
     <Loading />
   ) : (
     <div className="hotels-section">
-      {filteredHotels.map((hotel) => (
-        <div
-          className="hotel-card"
-          key={hotel.hotelID}
-          onClick={() => handleHotelClick(hotel.hotelID)}
-        >
-          <HotelCard Hotel={hotel} />
+      {filteredHotels.length !== 0 ? (
+        filteredHotels.map((hotel) => (
+          <div
+            className="hotel-card"
+            key={hotel.hotelID}
+            onClick={() => handleHotelClick(hotel.hotelID)}
+          >
+            <HotelCard Hotel={hotel} />
+          </div>
+        ))
+      ) : (
+        <div>
+          <p>No hotels found</p>
         </div>
-      ))}
+      )}
     </div>
   );
 };

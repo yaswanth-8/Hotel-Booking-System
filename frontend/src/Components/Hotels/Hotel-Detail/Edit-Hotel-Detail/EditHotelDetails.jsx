@@ -14,7 +14,7 @@ const EditHotelDetails = ({ hotel, fetchHotelData }) => {
       )
       .then((response) => {
         console.log("PUT request successful");
-        fetchHotelData = { fetchHotelData };
+        fetchHotelData();
       })
       .catch((error) => {
         console.error("Error in PUT request:", error);
