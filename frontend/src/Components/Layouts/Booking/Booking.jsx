@@ -6,6 +6,8 @@ import "./Booking.css";
 import axios from "axios";
 import Modal from "../../UI/Modal";
 import { useNavigate } from "react-router-dom";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 const Booking = ({ hotel }) => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -113,6 +115,14 @@ const Booking = ({ hotel }) => {
     setCheckOutDate(date);
   };
 
+  const handleAdultsChange = (x) => {
+    setNumAdults(x);
+  };
+
+  const handleChildrenChange = (x) => {
+    setNumChildren(x);
+  };
+
   return (
     <div className="booking-container">
       <div className="form-group">
@@ -139,26 +149,39 @@ const Booking = ({ hotel }) => {
           dateFormat="dd/MM/yyyy"
         />
       </div>
-      <div className="form-group">
-        <label className="form-label">Number of Adults:</label>
-        <input
-          type="number"
-          className="form-control"
-          value={numAdults}
-          min="1"
-          max="12"
-          onChange={(e) => setNumAdults(parseInt(e.target.value))}
-        />
-      </div>
-      <div className="form-group">
-        <label className="form-label">Number of Children:</label>
-        <input
-          type="number"
-          className="form-control"
-          max="10"
-          value={numChildren}
-          onChange={(e) => setNumChildren(parseInt(e.target.value))}
-        />
+      <div className="slider-container">
+        <div className="form-group">
+          <label className="form-label">Number of Adults:</label>
+          <div className="slider-label">{numAdults}</div>{" "}
+          {/* Display current number */}
+          <Slider
+            value={numAdults}
+            min={1}
+            max={12}
+            step={1}
+            onChange={handleAdultsChange}
+            marks={{
+              1: "1",
+              12: "12",
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label">Number of Children:</label>
+          <div className="slider-label">{numChildren}</div>{" "}
+          {/* Display current number */}
+          <Slider
+            value={numChildren}
+            min={0}
+            max={10}
+            step={1}
+            onChange={handleChildrenChange}
+            marks={{
+              0: "0",
+              10: "10",
+            }}
+          />
+        </div>
       </div>
       <div className="form-group">
         <label className="form-label">Price:</label>{" "}

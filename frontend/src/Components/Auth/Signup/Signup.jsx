@@ -20,12 +20,14 @@ function SignUp() {
     passwordFieldPosition: "right",
     inputType: "text",
   });
+  const [sendButtonState, setSendButtonState] = useState(false);
   const sendRef = useRef();
   const { postUser, isLoading, error } = usePostUser();
 
   const sendHandler = async () => {
     const inputValue = sendRef.current.value;
     if (inputValue === "") {
+      setSendButtonState(false);
       return;
     }
     const updatedFormData = { ...formData };
@@ -42,6 +44,10 @@ function SignUp() {
       }, 1000);
     } else if (!updatedFormData.email) {
       console.log(inputValue);
+      if (!inputValue.includes("@")) {
+        setSendButtonState(true);
+        return;
+      }
       setFormData((prev) => ({ ...prev, email: inputValue }));
       setTimeout(() => {
         setFormData((prev) => ({
@@ -87,6 +93,8 @@ function SignUp() {
   };
 
   const setToDefaultStateHandler = () => {
+    setSendButtonState(false);
+    sendRef.current.value = "";
     setFormData({
       userName: "",
       displayEmail: false,
@@ -110,7 +118,7 @@ function SignUp() {
       )}
 
       {formData.email && <div className="right">{formData.email}</div>}
-
+      {sendButtonState && <p className="right">invalid email</p>}
       {formData.displayPassword && (
         <div className="left">Enter your Password</div>
       )}
@@ -154,12 +162,21 @@ function SignUp() {
           }}
         />
         {formData.passwordFieldPosition === "right" ? (
+          !sendButtonState && (
+            <FontAwesomeIcon
+              onClick={sendHandler}
+              icon={faPaperPlane}
+              size="2xl"
+            />
+          )
+        ) : (
           <FontAwesomeIcon
-            onClick={sendHandler}
-            icon={faPaperPlane}
+            icon={faArrowsRotate}
+            onClick={setToDefaultStateHandler}
             size="2xl"
           />
-        ) : (
+        )}
+        {sendButtonState && (
           <FontAwesomeIcon
             icon={faArrowsRotate}
             onClick={setToDefaultStateHandler}
