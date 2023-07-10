@@ -5,6 +5,20 @@
   cursor: pointer;
 }
 
+.filter-right {
+  background-color: rgba(224, 232, 240, 0.452);
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 3px;
+  z-index: 1500;
+}
+.filter-left {
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  padding: 3px;
+}
+
 .Homescreen-container {
   display: flex;
   padding-top: 40px;

@@ -20,12 +20,14 @@ function Homescreen() {
             icon={faAnglesRight}
             size="xl"
             style={{ color: "#00415a" }}
+            className="filter-right"
           />
         ) : (
           <FontAwesomeIcon
             icon={faAnglesLeft}
             size="xl"
             style={{ color: "#00415a" }}
+            className="filter-left"
           />
         )}
       </div>
