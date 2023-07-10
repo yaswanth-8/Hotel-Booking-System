@@ -45,6 +45,13 @@
   padding-top: 100px;
 }
 
+.small-error-message {
+  color: red;
+  font-size: small;
+  position: relative;
+  top: -12px;
+}
+
 @media only screen and (max-width: 767px) {
   .app {
     grid-template-columns: 1fr;

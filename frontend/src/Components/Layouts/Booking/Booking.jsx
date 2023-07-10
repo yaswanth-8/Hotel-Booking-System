@@ -18,6 +18,7 @@ const Booking = ({ hotel }) => {
   const [totalPrice, setTotalPrice] = useState(hotel.pricePerNight);
   const [isModalOpen, setIsModalOpen] = useState(false); // State for controlling the modal
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+  const [dateErrorMessage, setDateErrorMessage] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -106,6 +107,8 @@ const Booking = ({ hotel }) => {
   };
 
   const handleCheckInDateChange = (date) => {
+    setDateErrorMessage(false);
+    setCheckOutDate(null);
     setCheckInDate(date);
     if (checkOutDate && date > checkOutDate) {
       setCheckOutDate(null);
@@ -114,6 +117,38 @@ const Booking = ({ hotel }) => {
 
   const handleCheckOutDateChange = (date) => {
     setCheckOutDate(date);
+    const CheckIn = new Date(checkInDate);
+    CheckIn.setDate(CheckIn.getDate() + 1);
+    const formattedCheckInDate = CheckIn.toISOString().split("T")[0];
+
+    const CheckOut = new Date(date);
+    CheckOut.setDate(CheckOut.getDate() + 1);
+    const formattedCheckOutDate = CheckOut.toISOString().split("T")[0];
+    const dateModel = {
+      user: {
+        userID: sessionStorage.getItem("UserID"),
+      },
+      hotel: {
+        hotelID: hotel.hotelID,
+      },
+      checkInDate: formattedCheckInDate,
+      checkOutDate: formattedCheckOutDate,
+    };
+
+    axios
+      .post(`${API_BASE_URL}/api/checkdate`, dateModel)
+      .then((response) => {
+        console.log(response);
+        if (response.data === "filled") {
+          console.log("Inside filled");
+          setCheckInDate(null);
+          setCheckOutDate(null);
+          setDateErrorMessage(true);
+        }
+      })
+      .catch((error) => {
+        console.log("Error submitting query:", error);
+      });
   };
 
   const handleAdultsChange = (x) => {
@@ -133,6 +168,7 @@ const Booking = ({ hotel }) => {
           selected={checkInDate}
           onChange={handleCheckInDateChange}
           minDate={new Date()}
+          value={checkInDate}
           dateFormat="dd/MM/yyyy"
         />
       </div>
@@ -147,9 +183,15 @@ const Booking = ({ hotel }) => {
               ? new Date(checkInDate.getTime() + 24 * 60 * 60 * 1000)
               : new Date()
           }
+          value={checkOutDate}
           dateFormat="dd/MM/yyyy"
         />
       </div>
+      {dateErrorMessage && (
+        <p className="small-error-message">
+          Selected dates are not available 😕
+        </p>
+      )}
       <div className="slider-container">
         <div className="form-group">
           <label className="form-label">Number of Adults:</label>
