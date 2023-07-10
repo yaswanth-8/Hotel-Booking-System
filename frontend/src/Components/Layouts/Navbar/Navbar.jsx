@@ -10,6 +10,11 @@ import { setNotificationCount } from "../../../store/Notification/notificationSl
 import { API_BASE_URL } from "../../../config";
 import Modal from "../../UI/Modal";
 import { useState } from "react";
+import {
+  setCountryFilter,
+  setPriceFilter,
+  setRatingFilter,
+} from "../../../store/Filter/filterSlice";
 
 function Navbar({ title, onAuthenticateClick }) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
@@ -64,6 +69,9 @@ function Navbar({ title, onAuthenticateClick }) {
 
   const handleLogout = () => {
     dispatch(signOut());
+    dispatch(setCountryFilter(null));
+    dispatch(setRatingFilter(0));
+    dispatch(setPriceFilter(1000000));
     setIsModalOpen(false);
     sessionStorage.clear();
     navigate("/");

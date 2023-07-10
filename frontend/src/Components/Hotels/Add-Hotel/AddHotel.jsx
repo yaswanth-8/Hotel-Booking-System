@@ -39,7 +39,27 @@ const AddHotel = () => {
     setIsOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevents the default form submission
+
+    const requiredFields = [
+      "name",
+      "location",
+      "country",
+      "foodStyle",
+      "description",
+      "about",
+      "pricePerNight",
+      "site",
+    ];
+    const isAllFieldsPresent = requiredFields.every(
+      (field) => hotelDetails[field]
+    );
+
+    if (!isAllFieldsPresent) {
+      console.log("Please fill all the required fields");
+      return;
+    }
     axios
       .post(`${API_BASE_URL}/api/Hotels`, hotelDetails)
       .then((response) => {
@@ -64,6 +84,7 @@ const AddHotel = () => {
               autoComplete="off"
               value={hotelDetails.name}
               onChange={handleInputChange}
+              required
             />
           </label>
           <label>
@@ -84,6 +105,7 @@ const AddHotel = () => {
               autoComplete="off"
               value={hotelDetails.location}
               onChange={handleInputChange}
+              required
             />
           </label>
           <label>
@@ -94,6 +116,7 @@ const AddHotel = () => {
               autoComplete="off"
               value={hotelDetails.country}
               onChange={handleInputChange}
+              required
             />
           </label>
           <label>
@@ -104,6 +127,7 @@ const AddHotel = () => {
               autoComplete="off"
               value={hotelDetails.foodStyle}
               onChange={handleInputChange}
+              required
             />
           </label>
           <label>
@@ -121,6 +145,7 @@ const AddHotel = () => {
               name="description"
               value={hotelDetails.description}
               onChange={handleInputChange}
+              required
             ></textarea>
           </label>
           <label>
@@ -129,6 +154,7 @@ const AddHotel = () => {
               name="about"
               value={hotelDetails.about}
               onChange={handleInputChange}
+              required
             ></textarea>
           </label>
           <label>
@@ -138,6 +164,7 @@ const AddHotel = () => {
               name="pricePerNight"
               value={hotelDetails.pricePerNight}
               onChange={handleInputChange}
+              required
             />
           </label>
           <label>
@@ -157,6 +184,7 @@ const AddHotel = () => {
               autoComplete="off"
               value={hotelDetails.site}
               onChange={handleInputChange}
+              required
             />
           </label>
           <button
