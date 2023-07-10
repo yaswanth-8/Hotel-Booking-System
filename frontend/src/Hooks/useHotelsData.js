@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../config";
 
 export const useHotelsData = (setIsLoading) => {
   const [hotels, setHotels] = useState([]);
@@ -6,7 +7,7 @@ export const useHotelsData = (setIsLoading) => {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await fetch("http://localhost:5225/api/hotels");
+        const response = await fetch(`${API_BASE_URL}/api/hotels`);
         const hotelData = await response.json();
         setHotels(hotelData);
         setIsLoading(false);

@@ -12,6 +12,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import Loading from "../../Layouts/Loading/Loading";
+import { API_BASE_URL } from "../../../config";
 
 function WeatherWrapper({ location }) {
   const weather = useGetWeather(location);
@@ -31,9 +32,7 @@ function HotelDetails() {
   }, []);
   const fetchHotelData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5225/api/hotels/${id}`
-      );
+      const response = await axios.get(`${API_BASE_URL}/api/hotels/${id}`);
       setHotel(response.data);
     } catch (error) {
       console.log("Error");

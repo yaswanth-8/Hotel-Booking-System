@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../../../config";
 
 const AddReview = ({ fetchData }) => {
   const [newReview, setNewReview] = useState("");
@@ -25,7 +26,7 @@ const AddReview = ({ fetchData }) => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5225/api/reviews",
+          `${API_BASE_URL}/api/reviews`,
           newReviewObj
         );
         console.log("Review submitted:", response.data);

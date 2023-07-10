@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../../../config";
 
 const EditHotelDetails = ({ hotel, fetchHotelData }) => {
   const [editedHotel, setEditedHotel] = useState(hotel);
@@ -8,10 +9,7 @@ const EditHotelDetails = ({ hotel, fetchHotelData }) => {
     console.log(editedHotel);
 
     axios
-      .put(
-        `http://localhost:5225/api/hotels/${editedHotel.hotelID}`,
-        editedHotel
-      )
+      .put(`${API_BASE_URL}/api/hotels/${editedHotel.hotelID}`, editedHotel)
       .then((response) => {
         console.log("PUT request successful");
         fetchHotelData();

@@ -3,6 +3,7 @@ import Modal from "../../UI/Modal";
 import "./AddHotel.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../config";
 
 const AddHotel = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +41,7 @@ const AddHotel = () => {
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:5225/api/Hotels", hotelDetails)
+      .post(`${API_BASE_URL}/api/Hotels`, hotelDetails)
       .then((response) => {
         console.log("Hotel created:", response.data);
         navigate("/hotels");

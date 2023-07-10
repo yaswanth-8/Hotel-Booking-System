@@ -5,6 +5,7 @@ import AddReview from "./AddReview/AddReview";
 import axios from "axios";
 import { faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { API_BASE_URL } from "../../../config";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -20,7 +21,7 @@ const Reviews = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5225/api/reviews/${hotelId}`
+        `${API_BASE_URL}/api/reviews/${hotelId}`
       );
       setReviews(response.data);
       console.log(response.data);
@@ -29,7 +30,7 @@ const Reviews = () => {
       if (auth !== "no-user") {
         const userID = sessionStorage.getItem("UserID");
         const likesResponse = await axios.get(
-          `http://localhost:5225/api/getlikes?userId=${userID}`
+          `${API_BASE_URL}/api/getlikes?userId=${userID}`
         );
         console.log(likesResponse.data);
         setUserLikesData(likesResponse.data);
@@ -50,7 +51,7 @@ const Reviews = () => {
       );
       if (like) {
         axios
-          .delete(`http://localhost:5225/api/likes/${like.likeID}`)
+          .delete(`${API_BASE_URL}/api/likes/${like.likeID}`)
           .then((response) => {
             // Handle success response
             console.log("Like removed successfully:", response.data);
@@ -74,7 +75,7 @@ const Reviews = () => {
         },
       };
       axios
-        .post("http://localhost:5225/api/likes", likeModel)
+        .post(`${API_BASE_URL}/api/likes`, likeModel)
         .then((response) => {
           // Handle success response
           console.log("Like added successfully:", response.data);
@@ -92,7 +93,7 @@ const Reviews = () => {
   const removeReviewHandler = (reviewID) => {
     console.log("remove review handler", reviewID);
     axios
-      .delete(`http://localhost:5225/api/reviews/${reviewID}`)
+      .delete(`${API_BASE_URL}/api/reviews/${reviewID}`)
       .then((response) => {
         console.log("Review deleted successfully:", response.data);
         fetchData();

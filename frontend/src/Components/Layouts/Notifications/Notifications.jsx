@@ -14,6 +14,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
 import { decrementNotificationCount } from "../../../store/Notification/notificationSlice";
+import { API_BASE_URL } from "../../../config";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -32,7 +33,7 @@ const Notifications = () => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get("http://localhost:5225/api/queries");
+      const response = await axios.get(`${API_BASE_URL}/api/queries`);
       setNotifications(response.data);
       const myNotifications = response.data.filter(
         (notification) =>
@@ -66,7 +67,7 @@ const Notifications = () => {
 
     try {
       await axios.put(
-        `http://localhost:5225/api/Queries/${notificationId}`,
+        `${API_BASE_URL}/api/Queries/${notificationId}`,
         selectedNotification
       );
       console.log("Notification status updated successfully");
@@ -97,7 +98,7 @@ const Notifications = () => {
 
     try {
       await axios.put(
-        `http://localhost:5225/api/Queries/${notificationId}`,
+        `${API_BASE_URL}/api/Queries/${notificationId}`,
         selectedNotification
       );
       console.log(`Notification ${notificationId} resolved successfully`);

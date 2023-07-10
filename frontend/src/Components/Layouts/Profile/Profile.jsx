@@ -3,6 +3,7 @@ import Modal from "../../UI/Modal";
 import axios from "axios";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../config";
 
 const Profile = () => {
   const [hotels, setHotels] = useState([]);
@@ -41,7 +42,7 @@ const Profile = () => {
       try {
         const id = sessionStorage.getItem("UserID");
         const response = await axios.get(
-          `http://localhost:5225/api/profile?id=${id}`
+          `${API_BASE_URL}/api/profile?id=${id}`
         );
         setHotels(response.data);
         console.log(response.data);
@@ -50,7 +51,7 @@ const Profile = () => {
       }
     } else {
       try {
-        const response = await axios.get(`http://localhost:5225/api/bookings`);
+        const response = await axios.get(`${API_BASE_URL}/api/bookings`);
         setHotels(response.data);
         console.log(response.data);
       } catch (error) {
@@ -81,7 +82,7 @@ const Profile = () => {
     setIsModalOpen(false);
 
     axios
-      .delete(`http://localhost:5225/api/bookings/${selectedHotelID}`)
+      .delete(`${API_BASE_URL}/api/bookings/${selectedHotelID}`)
       .then((response) => {
         // Handle successful response
         console.log("Booking cancelled successfully:", response.data);
@@ -106,7 +107,7 @@ const Profile = () => {
     console.log(editedHotel);
     console.log(newHotel);
     axios
-      .put(`http://localhost:5225/api/hotels/${editedHotel.hotelID}`, newHotel)
+      .put(`${API_BASE_URL}/api/hotels/${editedHotel.hotelID}`, newHotel)
       .then((response) => {
         console.log("PUT request successful");
 

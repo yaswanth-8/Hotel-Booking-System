@@ -3,6 +3,7 @@ import "./RaiseQuery.css";
 import axios from "axios";
 import Modal from "../../UI/Modal"; // Make sure to provide the correct path to the Modal component
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../config";
 
 const RaiseQuery = () => {
   const userId = sessionStorage.getItem("UserID");
@@ -31,7 +32,7 @@ const RaiseQuery = () => {
   const handleModalConfirm = () => {
     // Perform the API call here or any other action needed after the user confirms
     axios
-      .post("http://localhost:5225/api/queries", queryModel)
+      .post(`${API_BASE_URL}/api/queries`, queryModel)
       .then((response) => {
         console.log("Query submitted successfully:", response.data);
         navigate("/profile");

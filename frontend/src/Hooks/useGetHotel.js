@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const useGetHotel = (id) => {
   const [hotel, setHotel] = useState(null);
@@ -12,9 +13,7 @@ const useGetHotel = (id) => {
   }, [id]);
   const fetchHotelData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5225/api/hotels/${id}`
-      );
+      const response = await axios.get(`${API_BASE_URL}/api/hotels/${id}`);
       setHotel(response.data);
       setLoading(false);
     } catch (error) {

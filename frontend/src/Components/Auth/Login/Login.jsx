@@ -9,6 +9,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
 import bcrypt from "bcryptjs";
+import { API_BASE_URL } from "../../../config";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ function Login() {
       updatedFormData.password = inputValue;
       try {
         const response = await axios.get(
-          `http://localhost:5225/api/userInfo?email=${formData.email}`
+          `${API_BASE_URL}/api/userInfo?email=${formData.email}`
         );
         console.log(response.data);
         const storedHashedPassword = response.data.password;

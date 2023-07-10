@@ -3,6 +3,7 @@ import Filter from "./Filter/Filter";
 import "./Filters.css";
 
 import axios from "axios";
+import { API_BASE_URL } from "../../../config";
 
 function Filters() {
   const [countries, setCountries] = useState();
@@ -15,9 +16,7 @@ function Filters() {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5225/api/hotels/countries"
-      );
+      const response = await axios.get(`${API_BASE_URL}/api/hotels/countries`);
       setCountries(response.data);
     } catch (error) {
       console.log(error);

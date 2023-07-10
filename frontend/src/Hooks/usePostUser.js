@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../config";
 
 const usePostUser = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +10,7 @@ const usePostUser = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5225/api/Users", {
+      const response = await fetch(`${API_BASE_URL}/api/Users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

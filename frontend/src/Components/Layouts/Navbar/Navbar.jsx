@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHotel, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { setNotificationCount } from "../../../store/Notification/notificationSlice";
+import { API_BASE_URL } from "../../../config";
 
 function Navbar({ title, onAuthenticateClick }) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
@@ -29,7 +30,7 @@ function Navbar({ title, onAuthenticateClick }) {
 
   const fetchPendingCount = async () => {
     try {
-      const response = await fetch("http://localhost:5225/api/pending");
+      const response = await fetch(`${API_BASE_URL}/api/pending`);
       const data = await response.json();
       console.log("Pending count:", data);
       dispatch(setNotificationCount(data));

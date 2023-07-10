@@ -8,6 +8,7 @@ import Modal from "../../UI/Modal";
 import { useNavigate } from "react-router-dom";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { API_BASE_URL } from "../../../config";
 
 const Booking = ({ hotel }) => {
   const [checkInDate, setCheckInDate] = useState(null);
@@ -81,7 +82,7 @@ const Booking = ({ hotel }) => {
     };
 
     axios
-      .post("http://localhost:5225/api/bookings", bookingData)
+      .post(`${API_BASE_URL}/api/bookings`, bookingData)
       .then((response) => {
         console.log("Booking created:", response.data);
       })
@@ -90,7 +91,7 @@ const Booking = ({ hotel }) => {
       });
 
     axios
-      .post("http://localhost:5225/api/queries", bookingNotification)
+      .post(`${API_BASE_URL}/api/queries`, bookingNotification)
       .then((response) => {
         console.log("Query submitted successfully:", response.data);
         navigate("/hotels");
