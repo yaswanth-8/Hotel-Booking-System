@@ -8,8 +8,15 @@ namespace backend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<backendContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("backendContext") ?? throw new InvalidOperationException("Connection string 'backendContext' not found.")));
+           builder.Services.AddDbContext<backendContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DBContext"),
+                sqlServerOptionsAction:sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 10,
+                        maxRetryDelay: TimeSpan.FromSeconds(5),
+                        errorNumbersToAdd: null);
+                }));
             
 
             // Add services to the container.
@@ -22,12 +29,12 @@ namespace backend
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+         /*   if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
+               
+            }*/
+            app.UseSwagger();
+            app.UseSwaggerUI();
             builder.Services.AddCors();
 
             app.UseCors(builder =>

@@ -128,6 +128,36 @@ namespace backend.Controllers
             return CreatedAtAction("GetBooking", new { id = booking.BookingID }, booking);
         }
 
+
+        [HttpPost]
+        [Route("/api/checkdate")]
+        public async Task<string> CheckDate(Booking booking)
+        {
+            var hotel = await _context.Hotel.FindAsync(booking.Hotel.HotelID);
+            booking.Hotel = hotel;
+            Console.Write(booking.CheckInDate + " is check-in date");
+            Console.Write(booking.CheckOutDate + " is check-out date");
+
+            bool isSlotFilled = await IsBookingSlotFilled(booking);
+            if (isSlotFilled)
+            {
+                return "filled";
+            }
+
+            return "available";
+        }
+
+        private async Task<bool> IsBookingSlotFilled(Booking booking)
+        {
+            var bookings = await _context.Booking
+                .Where(b => b.Hotel.HotelID == booking.Hotel.HotelID &&
+                            b.CheckOutDate >= booking.CheckInDate &&
+                            b.CheckInDate <= booking.CheckOutDate)
+                .ToListAsync();
+
+            return bookings.Any();
+        }
+
         // DELETE: api/Bookings/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
