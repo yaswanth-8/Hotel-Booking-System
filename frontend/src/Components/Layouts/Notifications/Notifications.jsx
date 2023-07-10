@@ -23,6 +23,7 @@ const Notifications = () => {
   const [showResolveModal, setShowResolveModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [myNotificationsCount, setMyNotificationsCount] = useState(null); // Initialize myNotificationsCount with 0
+  const notificationCount = useSelector((state) => state.notification.count);
 
   const auth = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -244,6 +245,12 @@ const Notifications = () => {
         {myNotificationsCount !== null &&
         myNotificationsCount === 0 &&
         auth !== "admin" ? (
+          <div className="empty-message">Empty</div>
+        ) : (
+          ""
+        )}
+
+        {auth === "admin" && notificationCount === 0 ? (
           <div className="empty-message">Empty</div>
         ) : (
           ""
