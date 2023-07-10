@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { admin, signIn } from "../../../store/Auth-Slice/authSlice";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 import { API_BASE_URL } from "../../../config";
 
 function Login() {
@@ -55,10 +55,10 @@ function Login() {
             passwordMatched = true;
           }
         } else {
-          passwordMatched = await bcrypt.compare(
-            inputValue,
-            storedHashedPassword
-          );
+          // passwordMatched = await bcrypt.compare(
+          //   inputValue,
+          //   storedHashedPassword
+          // );
         }
         if (passwordMatched) {
           if (response.data.role === "admin") {

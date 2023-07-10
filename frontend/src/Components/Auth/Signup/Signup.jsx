@@ -6,7 +6,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import usePostUser from "../../../Hooks/usePostUser";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -75,12 +75,11 @@ function SignUp() {
         updatedFormData.retypePassword = "Password didnt match";
         updatedFormData.passwordFieldPosition = "left";
       } else {
-        const saltRounds = 10; // Number of salt rounds for bcrypt
-        const hashedPassword = await bcrypt.hash(inputValue, saltRounds);
+        //const saltRounds = 10; // Number of salt rounds for bcrypt
+        //const hashedPassword = await bcrypt.hash(inputValue, saltRounds);
 
         updatedFormData.retypePassword = inputValue;
-        console.log(hashedPassword);
-        postUser(formData.userName, formData.email, hashedPassword, "user");
+        postUser(formData.userName, formData.email, inputValue, "user");
         console.log(isLoading);
         if (error) {
           console.log(error);
