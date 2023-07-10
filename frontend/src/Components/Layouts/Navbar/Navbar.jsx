@@ -8,12 +8,15 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faHotel, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { setNotificationCount } from "../../../store/Notification/notificationSlice";
 import { API_BASE_URL } from "../../../config";
+import Modal from "../../UI/Modal";
+import { useState } from "react";
 
 function Navbar({ title, onAuthenticateClick }) {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
   const checkLogInfromStore = useSelector((state) => state.auth.user);
   const notificationCount = useSelector((state) => state.notification.count);
   const authUser = sessionStorage.getItem("auth-user");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const auth = isLoggedIn
     ? sessionStorage.getItem("auth-user")
     : checkLogInfromStore;
@@ -59,10 +62,15 @@ function Navbar({ title, onAuthenticateClick }) {
     navigate("/profile");
   };
 
-  const signOutHandler = () => {
+  const handleLogout = () => {
     dispatch(signOut());
+    setIsModalOpen(false);
     sessionStorage.clear();
     navigate("/");
+  };
+
+  const signOutHandler = () => {
+    setIsModalOpen(true);
   };
   const displayHotelsHandler = () => {
     navigate("/hotels");
@@ -120,6 +128,21 @@ function Navbar({ title, onAuthenticateClick }) {
           </button>
         )}
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {/* Modal content */}
+        <h3>Are you sure you want to logout?</h3>
+        <div className="modal-buttons">
+          <button
+            className="modal-cancel"
+            onClick={() => setIsModalOpen(false)}
+          >
+            No
+          </button>
+          <button className="modal-confirm" onClick={handleLogout}>
+            Yes
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }
