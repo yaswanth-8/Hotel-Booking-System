@@ -78,9 +78,10 @@ const Booking = ({ hotel }) => {
         userID: sessionStorage.getItem("UserID"),
       },
       subject: hotel.name,
-      content: "Booking done Successfully",
+      content: `Booking done Successfully for Hotel - ${hotel.name} `,
       status: "booking",
     };
+    window.location.href = "https://buy.stripe.com/test_14kfZmc8IaX11j25km";
 
     axios
       .post(`${API_BASE_URL}/api/bookings`, bookingData)

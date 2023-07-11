@@ -7,6 +7,10 @@
   padding-top: 40px;
 }
 
+.profile-hotel-card:hover {
+  transform: scale(1.02);
+}
+
 .profile-details {
   text-align: center;
 }

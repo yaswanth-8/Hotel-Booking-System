@@ -12,6 +12,8 @@ const Profile = () => {
   const [isCheckOutModalOpen, setIsCheckOutModalOpen] = useState(false);
   const [selectedHotelID, setSelectedHotelID] = useState(null);
   const [editedHotel, setEditedHotel] = useState("");
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] =
+    useState(false);
   const [selectedBooking, setselectedBooking] = useState({
     bookingID: "0",
     user: {
@@ -26,6 +28,10 @@ const Profile = () => {
       name: "unknown",
       site: "unknown",
     },
+  });
+  const [resetPassword, setResetPassword] = useState({
+    password: "",
+    retypedPassword: "",
   });
   const username = sessionStorage.getItem("userName");
   const email = sessionStorage.getItem("userEmail");
@@ -58,6 +64,34 @@ const Profile = () => {
         console.error("Error fetching hotels:", error);
       }
     }
+  };
+
+  const openResetPasswordModal = () => {
+    setIsResetPasswordModalOpen(true);
+    //console.log("inside reset password");
+  };
+
+  const resetPasswordHandler = () => {
+    console.log("inside reset password");
+    const requestBody = {
+      userID: sessionStorage.getItem("UserID"),
+      name: username,
+      email: email,
+      password: resetPassword.retypedPassword,
+      role: "user",
+    };
+
+    axios
+      .put(`${API_BASE_URL}/api/Users/${requestBody.userID}`, requestBody)
+      .then((response) => {
+        // Handle the response
+        console.log(response.data);
+        setIsResetPasswordModalOpen(false);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
   };
 
   const handleCancel = (hotelId) => {
@@ -258,6 +292,61 @@ const Profile = () => {
         </div>
       </Modal>
 
+      <Modal
+        isOpen={isResetPasswordModalOpen}
+        onClose={() => setIsResetPasswordModalOpen(false)}
+      >
+        <div className="modal-content">
+          <h3>Reset Password</h3>
+          <label>New Password:</label>
+          <input
+            type="text"
+            autoComplete="off"
+            value={resetPassword.password}
+            onChange={(e) =>
+              setResetPassword((prev) => ({
+                ...prev,
+                password: e.target.value,
+              }))
+            }
+          />
+
+          <label>Retype New Password:</label>
+          <input
+            type="text"
+            autoComplete="off"
+            value={resetPassword.retypedPassword}
+            onChange={(e) =>
+              setResetPassword((prev) => ({
+                ...prev,
+                retypedPassword: e.target.value,
+              }))
+            }
+          />
+          <div className="modal-buttons">
+            <button
+              className="modal-cancel"
+              onClick={() => setIsResetPasswordModalOpen(false)}
+            >
+              No
+            </button>
+            <button
+              className={
+                resetPassword.password === resetPassword.retypedPassword
+                  ? "modal-confirm"
+                  : "modal-cancel"
+              }
+              onClick={resetPasswordHandler}
+              disabled={
+                resetPassword.password !== resetPassword.retypedPassword
+              }
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </Modal>
+
       {selectedBooking.bookingID ? (
         <Modal
           isOpen={isDetailsModalOpen}
@@ -296,6 +385,9 @@ const Profile = () => {
       ) : (
         ""
       )}
+      <button className="profile-blue-button" onClick={openResetPasswordModal}>
+        Reset Password
+      </button>
     </div>
   );
 };
