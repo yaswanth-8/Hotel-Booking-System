@@ -176,7 +176,7 @@ const Profile = () => {
                 {new Date(hotel.checkOutDate).toLocaleDateString("en-GB")}
               </p>
               <p className="profile-hotel-price">
-                <strong>Price:</strong> ${hotel.price}
+                <strong>Price:</strong> ₹ {hotel.price}
               </p>
             </div>
             {auth !== "admin" ? (
@@ -268,7 +268,6 @@ const Profile = () => {
             <h5>Customer Email : {selectedBooking.user.email}</h5>
             <h5>Hotel Name : {selectedBooking.hotel.name}</h5>
             <h5>Hotel Country : {selectedBooking.hotel.country}</h5>
-            <h5>Food Style : {selectedBooking.hotel.foodStyle}</h5>
             <h5>Hotel Site : {selectedBooking.hotel.site}</h5>
 
             <div className="modal-buttons">
