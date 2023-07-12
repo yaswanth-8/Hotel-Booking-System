@@ -3,27 +3,32 @@ import "./Reviews.css";
 import { useSelector } from "react-redux";
 import AddReview from "./AddReview/AddReview";
 import axios from "axios";
-import { faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faSort, faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { API_BASE_URL } from "../../../config";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [userLikesData, setUserLikesData] = useState([]);
+  const [reviewAsc, setReviewAsc] = useState(false);
   const hotelId = sessionStorage.getItem("HotelID");
   const auth = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hotelId, auth]);
+  }, [hotelId, auth, reviewAsc]);
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `${API_BASE_URL}/api/reviews/${hotelId}`
       );
-      setReviews(response.data);
+      if (reviewAsc) {
+        setReviews(response.data);
+      } else {
+        setReviews(response.data.reverse());
+      }
       console.log(response.data);
 
       // Send additional GET request for likes
@@ -90,6 +95,11 @@ const Reviews = () => {
     }
   };
 
+  const reviewReverseHandler = () => {
+    setReviewAsc((prev) => !prev);
+    console.log(reviews);
+  };
+
   const removeReviewHandler = (reviewID) => {
     console.log("remove review handler", reviewID);
     axios
@@ -106,6 +116,13 @@ const Reviews = () => {
   return (
     <div className="reviews-container">
       <h2 className="reviews-title">Reviews</h2>
+      <div className="reviews-order">
+        <FontAwesomeIcon
+          icon={faSort}
+          onClick={reviewReverseHandler}
+          size="lg"
+        />{" "}
+      </div>
       <hr className="reviews-divider" />
 
       <div className="reviews-list">

@@ -166,7 +166,7 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-details">
         <h2 className="profile-name">{username}</h2>
-        <p className="profile-email">{email}</p>
+        {auth !== "admin" && <p className="profile-email">{email}</p>}
       </div>
       <hr />
       {hotels.length === 0 ? (

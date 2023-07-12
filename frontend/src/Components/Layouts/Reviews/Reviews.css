@@ -9,6 +9,17 @@
   margin-bottom: 10px;
 }
 
+.reviews-order {
+  position: absolute;
+  right: 15%;
+  top: 10%;
+  cursor: pointer;
+}
+
+.reviews-order:hover {
+  transform: scale(1.1);
+}
+
 .reviews-divider {
   margin: 20px 0;
   border: none;
