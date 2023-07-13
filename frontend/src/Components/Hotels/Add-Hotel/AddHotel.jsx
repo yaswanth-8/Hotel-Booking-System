@@ -4,6 +4,7 @@ import "./AddHotel.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../../config";
+import { useForm } from "react-hook-form";
 
 const AddHotel = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ const AddHotel = () => {
   });
 
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,7 +41,7 @@ const AddHotel = () => {
     setIsOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmitManual = (event) => {
     event.preventDefault(); // Prevents the default form submission
 
     const requiredFields = [
@@ -70,6 +72,47 @@ const AddHotel = () => {
         console.error("Error creating hotel:", error);
         // Handle any errors that occurred during the request
       });
+  };
+
+  const handleFileUpload = (data) => {
+    const newHotel = {
+      name: "",
+      address: "",
+      location: "",
+      country: "",
+      foodStyle: "",
+      rating: 0,
+      description: "",
+      about: "",
+      pricePerNight: 0,
+      offer: 0,
+      site: "",
+      url1: "",
+      url2: "",
+      url3: "",
+      url4: "",
+      url5: "",
+    };
+    const file = data.name[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const fileContent = event.target.result;
+        const lines = fileContent.split("\n");
+        const fields = Object.keys(newHotel);
+
+        lines.forEach((line, index) => {
+          if (fields[index]) {
+            newHotel[fields[index]] = line.trim();
+          }
+        });
+
+        console.log("New Hotel:", newHotel);
+        setHotelDetails(newHotel);
+      };
+      reader.readAsText(file);
+    }
   };
 
   return (
@@ -197,11 +240,20 @@ const AddHotel = () => {
           <button
             type="button"
             className="addHotel-button"
-            onClick={handleSubmit}
+            onClick={handleSubmitManual}
           >
             Submit
           </button>
         </div>
+      </form>
+      <form
+        className="addHotel-form-upload"
+        onSubmit={handleSubmit(handleFileUpload)}
+      >
+        <input type="file" {...register("name")} />
+        <button className="addHotel-button" type="submit">
+          Add
+        </button>
       </form>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
